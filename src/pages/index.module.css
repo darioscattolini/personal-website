@@ -1,0 +1,68 @@
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.heroBannerContainer {
+  display: flex;
+  align-items: center;
+}
+
+.heroBannerText {
+  flex-grow: 1;
+}
+
+.heroBannerImage img {
+  max-width: 350px;
+  margin-right: 128px;
+  margin-bottom: 32px;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBannerContainer {
+    display: block;
+  }
+
+  .heroBannerImage img {
+    margin-right: 0;
+    width: 100%;
+  }
+}
+
+.heroTitle {
+  margin-bottom: 24px;
+  text-align: left;
+  font-size: 3rem;
+  font-family: Consolas, 'Courier New', Courier, monospace;
+}
+
+.heroSubtitle {
+  text-align: left;
+  font-size: 2rem;
+  font-family: Consolas, 'Courier New', Courier, monospace;
+  line-height: 1.5;
+}
+
+.about {
+  margin-top: 64px;
+  margin-bottom: 64px;
+  text-align: center;
+}
+
+.about h1 {
+  margin-bottom: 48px;
+}
+
+.about p {
+  font-size: larger;
+  max-width: 850px;
+  margin: 8px auto;
+}
