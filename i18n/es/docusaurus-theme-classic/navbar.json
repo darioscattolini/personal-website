@@ -1,0 +1,26 @@
+{
+  "item.label.Tutorial": {
+    "message": "Tutorial",
+    "description": "Navbar item with label Tutorial"
+  },
+  "item.label.Blog": {
+    "message": "Blog",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.About Me": {
+    "message": "About Me",
+    "description": "Navbar item with label About Me"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  },
+  "item.label.LinkedIn": {
+    "message": "LinkedIn",
+    "description": "Navbar item with label LinkedIn"
+  },
+  "item.label.Stack Overflow": {
+    "message": "Stack Overflow",
+    "description": "Navbar item with label Stack Overflow"
+  }
+}

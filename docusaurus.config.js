@@ -58,6 +58,10 @@ const navbar = {
       label: 'Stack Overflow',
       position: 'right',
     },
+    {
+      type: 'localeDropdown',
+      position: 'right',
+    },
   ],
 };
 
@@ -82,6 +86,10 @@ const config = {
   title: 'Darío Scattolini | Front-end developer based in Barcelona',
   url: 'https://www.darioscattolini.com',
   baseUrl: '/',
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'es']
+  },
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.png',

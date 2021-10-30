@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import Typewriter from 'typewriter-effect';
 import Layout from '@theme/Layout';
-import Link from '@docusaurus/Link';
+import Translate, { translate } from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
 import HomepageFeatures from '../components/HomepageFeatures';
@@ -19,9 +19,14 @@ function HomepageHeader() {
           <h1 className={styles.heroTitle}>Darío Scattolini</h1>
           <div className={styles.heroSubtitle}><Typewriter 
             onInit={(typewriter) => {
+              const content = translate({
+                message: 'Front-end developer with full-stack inclinations',
+                id: 'index.header'
+              });
+
               typewriter
                 .pasteString('> ', null)
-                .typeString('Front-end developer with full-stack inclinations')
+                .typeString(content)
                 .start();
             }}
           /></div>
