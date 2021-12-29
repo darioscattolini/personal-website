@@ -31,7 +31,7 @@ const navbar = {
       type: 'doc',
       docId: 'intro',
       position: 'left',
-      label: 'Tutorial',
+      label: 'Coding Papers',
     },
     {
       to: '/blog', 

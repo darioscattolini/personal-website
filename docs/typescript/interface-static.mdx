@@ -1,0 +1,44 @@
+---
+id: intro
+title: "How to define an interface for the static part of TypeScript classes"
+sidebar_position: 1
+tags:
+  - TypeScript
+  - interface
+  - static
+  - class
+---
+
+Seguramente ya sabes que una clase en TypeScript y JavaScript puede tener
+*miembros estáticos*, definidos con la palabra clave `static`. A diferencia de
+las propiedades y métodos normales, que pertenecen o se aplican a cada una de
+las instancias de la clase, las propiedades y métodos estáticos no pertenecen a
+ninguna instancia particular sino a la clase en su conjunto.
+
+Las propiedades estáticas pueden ser útiles para almacenar constantes y datos de
+configuración vinculados a una clase. Los métodos, por su parte, pueden efectuar
+operaciones que no dependen de una instancia puntual, como comparar dos
+instancias diferentes. Por ejemplo:
+
+```ts
+class Person {
+
+    public name: string;
+    
+    constructor(name: string) {
+        this.name = string;
+    }
+    
+    public introduceHerself(): string {
+        return `Hi! I'm ${this.name}`;
+    }
+}
+```
+
+## Solución intuitiva equivocada
+
+## Solución 1
+
+## Solución 2
+
+## Casos de uso

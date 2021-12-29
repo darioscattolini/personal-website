@@ -1,14 +1,10 @@
 {
-  "item.label.Tutorial": {
-    "message": "Tutorial",
-    "description": "Navbar item with label Tutorial"
-  },
   "item.label.Blog": {
     "message": "Blog",
     "description": "Navbar item with label Blog"
   },
   "item.label.About Me": {
-    "message": "About Me",
+    "message": "Sobre mí",
     "description": "Navbar item with label About Me"
   },
   "item.label.GitHub": {
@@ -22,5 +18,9 @@
   "item.label.Stack Overflow": {
     "message": "Stack Overflow",
     "description": "Navbar item with label Stack Overflow"
+  },
+  "item.label.Coding Papers": {
+    "message": "Programación",
+    "description": "Navbar item with label Coding Papers"
   }
 }
