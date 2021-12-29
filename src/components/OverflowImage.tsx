@@ -3,7 +3,7 @@ import styles from './OverflowImage.module.css';
 
 export default function OverflowImage(props): JSX.Element {
   return(
-    <div className={styles.container}>
+    <p className={styles.container}>
       <img 
         src={ props.src }
         alt={ props.alt }
@@ -12,6 +12,6 @@ export default function OverflowImage(props): JSX.Element {
           maxWidth: props.maxWidth ? props.maxWidth : 'none'
         }} 
       />
-    </div>
+    </p>
   );
 }
