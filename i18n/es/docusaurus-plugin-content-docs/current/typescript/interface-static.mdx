@@ -12,6 +12,8 @@ tags:
 ---
 
 import TOCInline from '@theme/TOCInline';
+import OverflowImage from '@site/src/components/OverflowImage';
+import classTranspiledImgUrl from './assets/typescript-class-transpiled-to-ecmascript-5.png';
 
 <TOCInline toc={toc} />
 
@@ -181,14 +183,65 @@ interfaz estática elimina las anteriores desventajas:
 
 Las clases en JavaScript [son objetos de primera
 clase](https://en.wikipedia.org/wiki/First-class_citizen), pueden ser valores de
-variables y ser representados por tipos en TypeScript. Para comprender cómo se
-representan las clases por tipos en TypeScript puede ser útil mostrar qué son
-exactamente las clases en cuanto objetos en JavaScript. Una forma sencilla de
-verlo es analizando el resultado de transpilar una clase de TypeScript a
-EcmaScript 5:
+variables y ser representados por tipos en TypeScript. Para comprender qué forma
+tiene el tipo de una clase hay que analizar el tipo de objeto que son las clases
+en JavaScript. Podemos observarlo en el resultado de transpilar una clase de
+TypeScript a EcmaScript 5:
 
-![TypeScript class transpiled to ECMAScript 5](./assets/typescript-class-transpiled-to-ecmascript-5.png)
-600px
+<OverflowImage
+  src={classTranspiledImgUrl}
+  alt={'TypeScript class transpiled to ECMAScript 5'}
+  minWidth={600}
+  maxWidth={900}
+/>
+
+Como se puede ver en la porción de código rodeada con un recuadro, una clase en
+última instancia es una [función
+constructora](https://javascript.info/constructor-new) como `Example`. Sus
+propiedades de instancia se asignan como propiedades de `this` dentro de la
+función constructora, sea que sus valores provengan de parámetros o se asignen
+al declarar la propiedad. Los métodos de instancia, en cambio, se añaden al
+objeto `prototype` de la función constructora. La función constructora es un
+objeto, y por ende se le pueden añadir nuevas propiedades. Las propiedades y
+métodos estáticos de la clase no son otra cosa que propiedades añadidas a la
+función constructora en tanto objeto. En consecuencia, lo que antes hemos
+definido como una interfaz estática es una interfaz que representa estas
+propiedades adicionales de la función constructora (y opcionalmente el tipo de
+la función constructora misma).
+
+¿Cuál sería, entonces, el tipo de un objeto como `Example`? En TypeScript toda
+clase es a la vez un valor y un tipo. Al definir una clase no sólo estamos
+creando un valor, una función constructora, sino también generando una interfaz
+que describe la forma de las instancias creadas por dicha función. Esto es lo
+que permite usar el nombre de una clase para tipar variables en declaraciones
+como `const example: Example = ...`. Sin embargo, aquí no nos estamos
+preguntando por el tipo *de las instancias* de `Example`, sino por el tipo de
+`Example` *en cuanto objeto*.
+
+TypeScript nos ofrece una forma directa de referirnos a ese tipo sin tener que
+construirlo explícitamente: `typeof Example`. Más adelante comprobaremos su
+utilidad. Sin embargo, también podemos construir explícitamente ese tipo:
+debemos tipar la función constructora y añadir los tipos para las propiedades
+estáticas. Más adelante veremos que nuestras interfaces estáticas tendrán esta
+forma:
+
+```ts
+type TypeOfExample = {
+  new (parameter: string): {
+    instanceProp1: string,
+    instanceProp2: string,
+    instanceMethod(): string
+  };
+  staticProp: string;
+  staticMethod(): string;
+};
+```
+
+Naturalmente, este tipo no representa la interfaz completa de `Example`, ya que
+los objetos de JavaScript son creados con miembros adicionales a los que se
+explicitan en su definición. Sin embargo, aquí no nos interesa tipar esas
+funcionalidades "de fábrica".
+
 :::
 
 Planteado así el problema, primero mostraremos distintas estrategias para
