@@ -19,11 +19,13 @@ import classTranspiledImgUrl from './assets/typescript-class-transpiled-to-ecmas
 
 ## Qué son los miembros estáticos de una clase
 
-Seguramente ya sabes que una clase en TypeScript y JavaScript puede tener
-*miembros estáticos*, definidos con la palabra clave `static`. Así como las
-propiedades y métodos normales pertenecen o se aplican a cada una de las
-*instancias* de la clase, **las propiedades y métodos estáticos no pertenecen a
-ninguna instancia particular sino *a la clase* en su conjunto**.
+Seguramente ya sabes que una clase puede tener *miembros estáticos* tanto [en
+JavaScript](https://es.javascript.info/static-properties-methods) como [en
+TypeScript](https://www.typescriptlang.org/docs/handbook/2/classes.html#static-members).
+Éstos se definen con la palabra clave `static`. Así como las propiedades y
+métodos normales pertenecen o se aplican a cada una de las *instancias* de la
+clase, **las propiedades y métodos estáticos no pertenecen a ninguna instancia
+particular sino *a la clase* en su conjunto**.
 
 Las propiedades estáticas pueden ser útiles para almacenar constantes y datos de
 configuración vinculados a una clase. Los métodos, por su parte, pueden efectuar
@@ -31,10 +33,10 @@ operaciones que no son propias de una instancia puntual, como comparar dos
 instancias diferentes u operar con ellas.
 
 Podemos analizar esta diferencia con el siguiente ejemplo. Definimos una clase
-para construir vectores bidimensionales. Cada instancia de un vector tiene sus
-propias propiedades y métodos: `x`, `y` y `getMagnitude`. A su vez, la clase
-posee el método estático `sum` para sumar una cantidad indefinida de vectores
-bidimensionales.
+para construir [vectores bidimensionales](https://es.wikipedia.org/wiki/Vector).
+Cada instancia de un vector tiene sus propias propiedades y métodos: `x`, `y` y
+`getMagnitude`. A su vez, la clase posee el método estático `sum` para sumar una
+cantidad indefinida de vectores bidimensionales.
 
 ```ts
 class Vector2D {
@@ -44,14 +46,14 @@ class Vector2D {
   ) { }
 
   public static sum(...vectors: Vector2D[]): Vector2D {
-    const coords = vectors.reduce((totals, vector) => {
+    const {x, y} = vectors.reduce((totals, vector) => {
       totals.x += vector.x;
       totals.y += vector.y;
       
       return totals;
     }, {x: 0, y: 0});
 
-    return new this(coords.x, coords.y);
+    return new this(x, y);
   }
 
   public getMagnitude(): number {
@@ -77,26 +79,25 @@ sumOfVectors.getMagnitude();                            // 5.09901...
 
 Nos planteamos ahora el siguiente problema: debemos **definir una serie de
 clases que deben compartir una misma interfaz para sus miembros estáticos**.
-Para comprender mejor el problema lo abordaremos con algunos casos de uso.
+Para comprender mejor el problema lo abordaremos con un caso de uso.
 
-Supongamos que estamos desarrollando un juego, donde una de las entidades es el
-monstruo, representada mediante la clase madre (o interfaz) `Monster`. Hay
-distintos tipos de monstruos, construidos cada uno mediante una clase hija de
-`Monster` (o que implementa la interfaz `Monster`): `Orc`, `Zombie`, `Dragon`...
-Supongamos, por último, que cada una de estas clases hijas debe implementar una
-propiedad estática `maxAmount`, la cual representa la cantidad máxima de
-monstruos de un tipo determinado que puede ser instanciada para un escenario
-particular.
+Supongamos que estamos desarrollando un juego que incluye una entidad monstruo,
+representada mediante la clase madre (o interfaz) `Monster`. Hay distintos tipos
+de monstruos, construidos cada uno mediante una clase hija de `Monster` (o que
+implementa la interfaz `Monster`): `Orc`, `Zombie`, `Dragon`... Supongamos, por
+último, que cada una de estas clases hijas debe implementar una propiedad
+estática `maxAmount`, la cual representa la cantidad máxima de monstruos de un
+tipo determinado que puede ser instanciada para un escenario particular.
 
 Uno podría sin más implementar la propiedad `maxAmount` en cada una de las
 clases hijas:
 
 ```ts
-class Orc {
+class Orc extends Monster {
   static maxAmount = 4;
 }
 
-class Zombie {
+class Zombie extends Monster {
   static maxAmount = 8;
 }
 
@@ -106,18 +107,19 @@ class Zombie {
 Sin embargo, esto tiene una serie de desventajas:
 
 1. El programador debe recordar para cada clase los miembros estáticos que debe
-   implementar y sus tipos. Mientras más miembros estáticos haya que
-   implementar aumentan las probabilidades de olvidar alguno o de implementarlos
-   incorrectamente.
+   implementar y sus tipos. Cuantos más miembros estáticos haya que implementar
+   más probable se vuelve olvidar alguno o implementarlo incorrectamente.
 2. Si `maxAmount`cambia de nombre o de tipo, o se añaden nuevos miembros
    estáticos que todas las clases deben satisfacer, la actualización de las
    clases se realiza una por una al igual que en el punto anterior. El
    programador podría equivocarse al actualizar las clases "manualmente" (podría
-   olvidar algunas clases o realizar incorrectamente alguna actualización).
+   olvidar hacerlo en algunas clases, o realizar incorrectamente alguna
+   actualización).
 3. Las clases en JavaScript y TypeScript, además de definir tipos, también son
    valores susceptibles de ser manipulados programáticamente. TypeScript no
-   permitirá algunas operaciones con dichas clases si no sabe, por ejemplo, que
-   pueden contener la propiedad estática `maxAmount`.
+   permitirá algunas operaciones con variables que almacenan las clases de
+   monstruos si los tipos asociados a esas variables no incluyen miembros
+   estáticos como `maxAmount`.
 
 Estas desventajas se resumen en el hecho de que **hay una estructura común que
 puede ser abstraída de todas estas clases y se está perdiendo la oportunidad de
@@ -139,7 +141,7 @@ queremos poder especificar que su parte estática implementa `MonsterStatic`.
 Esto se expresaría así en pseudo-código:
 
 ```ts
-class Orc cuya parte estática implementa MonsterStatic {
+class Orc extends Monster y cuya parte estática implementa MonsterStatic {
   // ...
 }
 ```
@@ -148,8 +150,8 @@ De aquí en más, para abstraernos de nuestro caso de uso, **nos referiremos a
 `MonsterStatic` como *interfaz estática* y a las clases cuya parte estática
 es representada por dicha interfaz como *clases representadas***.
 
-Esta posibilidad de referir los miembros estáticos de varias clases a una misma
-interfaz estática elimina las anteriores desventajas:
+Esta posibilidad de representar los miembros estáticos de varias clases mediante
+una misma interfaz estática elimina las anteriores desventajas:
 
 1. El programador ya no debe recordar para cada clase representada los miembros
    estáticos que debe implementar y sus tipos, sino que **debe limitarse a
@@ -166,12 +168,12 @@ interfaz estática elimina las anteriores desventajas:
    Por ejemplo:
 
   ```ts
-  function createMonsters(classes: MonsterStatic[]) {
+  function createMonsters(monsterClasses: MonsterStatic[]): Monster[] {
     const monsters: Monster[] = [];
 
-    for (const monsterClass of classes) {
-      for (let i = 0; i < monsterClass.maxAmount; i++) {
-        monsters.push(new monsterClass());
+    for (const Monster of monsterClasses) {
+      for (let i = 0; i < Monster.maxAmount; i++) {
+        monsters.push(new Monster());
       }
     }
 
@@ -179,14 +181,13 @@ interfaz estática elimina las anteriores desventajas:
   }
   ```
 
-:::info El tipo de una clase en cuanto objeto
+:::info Las clases en cuanto objetos, y sus tipos
 
-Las clases en JavaScript [son objetos de primera
+Las clases en JavaScript son [objetos de primera
 clase](https://en.wikipedia.org/wiki/First-class_citizen), pueden ser valores de
-variables y ser representados por tipos en TypeScript. Para comprender qué forma
-tiene el tipo de una clase hay que analizar el tipo de objeto que son las clases
-en JavaScript. Podemos observarlo en el resultado de transpilar una clase de
-TypeScript a EcmaScript 5:
+variables y ser representadas por tipos en TypeScript. Si transpilamos una clase
+de TypeScript a EcmaScript 5 podemos comprender mejor en qué consisten las
+clases en cuanto objetos:
 
 <OverflowImage
   src={classTranspiledImgUrl}
@@ -197,17 +198,14 @@ TypeScript a EcmaScript 5:
 
 Como se puede ver en la porción de código rodeada con un recuadro, una clase en
 última instancia es una [función
-constructora](https://javascript.info/constructor-new) como `Example`. Sus
+constructora](https://es.javascript.info/constructor-new) como `Example`. Sus
 propiedades de instancia se asignan como propiedades de `this` dentro de la
 función constructora, sea que sus valores provengan de parámetros o se asignen
 al declarar la propiedad. Los métodos de instancia, en cambio, se añaden al
-objeto `prototype` de la función constructora. La función constructora es un
-objeto, y por ende se le pueden añadir nuevas propiedades. Las propiedades y
+objeto `prototype` de la función constructora. Las funciones en JavaScript son
+objetos, y por ende se les puede añadir nuevas propiedades. Las propiedades y
 métodos estáticos de la clase no son otra cosa que propiedades añadidas a la
-función constructora en tanto objeto. En consecuencia, lo que antes hemos
-definido como una interfaz estática es una interfaz que representa estas
-propiedades adicionales de la función constructora (y opcionalmente el tipo de
-la función constructora misma).
+función constructora en tanto objeto.
 
 ¿Cuál sería, entonces, el tipo de un objeto como `Example`? En TypeScript toda
 clase es a la vez un valor y un tipo. Al definir una clase no sólo estamos
@@ -220,18 +218,27 @@ preguntando por el tipo *de las instancias* de `Example`, sino por el tipo de
 
 TypeScript nos ofrece una forma directa de referirnos a ese tipo sin tener que
 construirlo explícitamente: `typeof Example`. Más adelante comprobaremos su
-utilidad. Sin embargo, también podemos construir explícitamente ese tipo:
-debemos tipar la función constructora y añadir los tipos para las propiedades
-estáticas. Más adelante veremos que nuestras interfaces estáticas tendrán esta
-forma:
+utilidad. 
+
+También podemos construir explícitamente ese tipo: se trata de una función
+constructora con determinadas propiedades añadidas. Lo que antes hemos definido
+como una interfaz estática es una interfaz que representa estas propiedades
+añadidas a la función constructora. La función constructora misma es tipada
+mediante un [distintivo de
+constructor](https://www.typescriptlang.org/docs/handbook/2/functions.html#construct-signatures).
+El tipo explícito de una clase entonces es un distintivo de constructor más los
+tipos de los miembros estáticos. En el caso de `Example` se vería así:
 
 ```ts
 type TypeOfExample = {
+  // distintivo de constructor
   new (parameter: string): {
     instanceProp1: string,
     instanceProp2: string,
     instanceMethod(): string
   };
+
+  // interfaz estática
   staticProp: string;
   staticMethod(): string;
 };
@@ -244,9 +251,10 @@ funcionalidades "de fábrica".
 
 :::
 
-Planteado así el problema, primero mostraremos distintas estrategias para
-construir y aplicar esta interfaz estática, y al final del artículo
-presentaremos un caso de uso más realista.
+Hemos definido qué es y para qué nos sirve una interfaz estática. Planteado así
+el problema, primero mostraremos distintas estrategias para construir y aplicar
+la interfaz `MonsterStatic`, y al final del artículo presentaremos un caso de
+uso más realista.
 
 ## Cinco abordajes del problema
 
@@ -259,9 +267,12 @@ soluciones correctas pero con distintas desventajas.
 ### 1. Interfaz estática implementada en una clase madre
 
 **Una forma intuitiva de abstraer funcionalidad común entre diferentes clases es
-utilizando el mecanismo de *herencia***. Podríamos intentar implementar
-`MonsterStatic` en la clase madre `Monster`, y hacer que las clases
-representadas hereden la interfaz estática de esta clase madre.
+utilizando el mecanismo de *herencia***, presente tanto [en
+JavaScript](https://es.javascript.info/class-inheritance) como [en
+TypeScript](https://www.typescriptlang.org/docs/handbook/2/classes.html#extends-clauses).
+Podríamos intentar implementar `MonsterStatic` en la clase madre `Monster`, y
+hacer que las clases representadas hereden la interfaz estática de esta clase
+madre.
 
 **JavaScript y TypeScript permiten la herencia de propiedades y métodos
 estáticos**. Su mecanismo es análogo a la herencia de miembros de instancia: si
@@ -270,31 +281,53 @@ ejemplo:
 
 ```ts
 class Monster {
-  static maxAmount = 2;
+  static maxAmount = 5;
+
+  constructor(
+    public readonly type: string,
+    public damage: number,
+    public hitPoints: number
+  ) { }
+  
+  public attack(target: Character): void {
+    // ...
+  }
 }
 
-class Orc extends Monster { }
+class Orc extends Monster {
+  constructor() {
+    super('Orc', 3, 10);
+  }
+}
 
 class Zombie extends Monster {
-  static maxAmount = 5;
+  static maxAmount = 8;
+
+  constructor() {
+    // ...
+  }
 }
 
-Orc.maxAmount;          // 2
-Zombie.maxAmount;       // 5
+Orc.maxAmount;          // 5
+Zombie.maxAmount;       // 8
 ```
 
 Sin embargo, esta forma de herencia no nos sirve para nuestro caso de uso, ya
 que el valor de la propiedad `maxAmount` es especial para cada una de las clases
 representadas, por lo que no puede especificarse en la clase madre. Esta
 solución **sólo es útil en casos donde no requerimos que las clases hijas
-implementen miembros estáticos diferentes a los de la clase madre, p. ej. si hay
-métodos estáticos heredados no polimórficos (con una única implementación)**.
+implementen miembros estáticos diferentes a los de la clase madre, p. ej. si
+requerimos un método estático no polimórfico (con una única implementación)**.
+Por ejemplo, retomando la clase para los vectores definida en la primera
+sección, podemos construir clases hijas para entidades físicas como la velocidad
+o la fuerza sin reformular el método `sum`, que puede ser heredado.
 
 Uno podría intentar mantener este esquema de solución **recurriendo a las
-*clases abstractas*, que no existen en JavaScript pero sí en TypeScript**. Así,
-`Monster` se definiría como una clase abstracta, que contendría a `maxAmount`
-como propiedad estática abstracta. Como ocurre con los miembros no estáticos
-abstractos, cada clase que herede de `Monster` debería contener una
+*clases abstractas*, que no existen en JavaScript pero [sí en
+TypeScript](https://www.typescriptlang.org/docs/handbook/2/classes.html#abstract-classes-and-members)**.
+Así, `Monster` se definiría como una clase abstracta, que contendría a
+`maxAmount` como propiedad estática abstracta. Como ocurre con los miembros de
+instancia abstractos, cada clase que herede de `Monster` debería contener una
 implementación de `maxAmount`, cumpliendo el objetivo que nos proponemos.
 
 Sin embargo, por el momento **TypeScript no permite que los miembros estáticos
@@ -305,16 +338,19 @@ parece estar en vías de resolución.
 
 ### 2. Interfaz estática incluida en una interfaz implementada por las clases representadas
 
-Las *interfaces* son otro tipo de abstracción que pueden representar elementos
-comunes a diversas clases y objetos. A diferencia de una clase madre, **una
-interfaz no puede implementar ninguna funcionalidad: no puede establecer ningún
-valor o implementación para sus miembros, sino sólo especificar *sus tipos***.
-Esta especificación representa un "contrato" que las diversas clases que lo
-implementan deben cumplir: los nombres y los tipos que deben tener determinados
-miembros de dichas clases. Otras partes del código luego pueden contentarse con
-saber que están interactuando con una entidad que implementa dicho contrato (p.
-ej., saber que pueden llamar a determinado método y obtener determinado tipo de
-valor) sin acoplarse con ninguna implementación particular del mismo.
+[Las *interfaces* son otro tipo de abstracción que pueden representar elementos
+comunes a diversas clases y
+objetos](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces).
+A diferencia de una clase madre, que es un tipo y un valor, una interfaz de
+TypeScript es sólo un tipo. En consecuencia, **no puede implementar ninguna
+funcionalidad: no puede establecer ningún valor o implementación para sus
+miembros, sino sólo especificar *sus tipos***. Esta especificación representa un
+"contrato" que las diversas clases que lo implementan deben cumplir: los nombres
+y los tipos que deben tener determinados miembros de dichas clases. Otras partes
+del código luego pueden contentarse con saber que están interactuando con una
+entidad que implementa dicho contrato (p. ej., saber que pueden llamar a
+determinado método y obtener determinado tipo de valor) sin acoplarse con
+ninguna implementación particular del mismo.
 
 Podemos intentar definir una interfaz a ser implementada por las clases
 representadas, incluyendo en ella nuestra interfaz estática. El resultado
@@ -326,7 +362,7 @@ interface Monster {
   readonly type: string;
   damage: number;
   hitPoints: number;
-  attack (target: Character): void;
+  attack(target: Character): void;
 }
 
 class Orc implements Monster {
@@ -368,11 +404,11 @@ interface Monster {
   readonly type: string;
   damage: number;
   hitPoints: number;
-  attack (target: Character): void;
+  attack(target: Character): void;
 }
 
 interface MonsterStatic {
-  static maxAmount: number;
+  maxAmount: number;
 }
 
 class Orc implements Monster, static MonsterStatic {
@@ -380,7 +416,7 @@ class Orc implements Monster, static MonsterStatic {
 }
 ```
 
-La ambigüedad queda así resuelta: se utilizaría la interfaz `Monster` para
+Esto elimina cualquier ambigüedadS: se utilizaría la interfaz `Monster` para
 representar las instancias de las clases y `MonsterStatic` para representar las
 clases mismas en cuanto valores. Sin embargo, **por el momento esta sintaxis no
 está incluida en TypeScript**, [aunque su incorporación está en
@@ -409,15 +445,27 @@ const Orc = class {
 ```
 
 En el segundo caso del ejemplo anterior `class { }` constituye una expresión,
-una porción de código que representa un valor, el cual es asignado a la variable
-`Orc`.
+una porción de código que representa un valor (una función constructora), el
+cual es asignado a la variable `Orc`. En las expresiones de clase también es
+posible especificar una relación de herencia, y la implementación de interfaces
+en el caso de TypeScript:
+
+```ts
+const Orc = class extends Monster {
+  // ...
+};
+
+const Orc = class implements Monster {
+  // ...
+};
+```
 
 Esta forma de definir una clase puede ser usada en TypeScript para **requerir
-que la clase definida sea de un tipo determinado**. Dicho tipo puede ser
-**especificado al declarar la variable** y representará a la clase como objeto,
-no a sus instancias (como ocurriría si se tratara de una interfaz implementada
-por la clase). Este tipo puede ser una interfaz que establezca los
-requerimientos que debe satisfacer la parte estática de la clase.
+que la clase definida sea de un tipo determinado utilizando una [*anotación de
+tipo*](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-annotations-on-variables)**.
+Dicho tipo es **especificado al declarar la variable** en la que se almacenará
+la clase, pudiendo ser una interfaz que establezca los requerimientos que debe
+satisfacer la parte estática de la clase.
 
 Partiendo de las interfaces desdobladas definidas anteriormente, nuestro caso de
 uso ahora se vería así:
@@ -460,33 +508,38 @@ const Orc: MonsterStatic = class extends Monster {
 };
 ```
 
-Resta un último detalle: la interfaz `MonsterStatic` debe representar también
-que sus instancias, en tanto clases, son funciones constructoras. De lo
-contrario, un pedazo de código como la función `createMonsters` no podría
-escribirse, ya que TypeScript no tiene cómo saber que los objetos del tipo
-`MonsterStatic` son clases que pueden crear objetos con `new`. Es preciso
-añadir a la interfaz lo que en TypeScript se conoce como [*construct signature*
-o distintivo de
-constructor](https://www.typescriptlang.org/docs/handbook/2/functions.html#construct-signatures).
+Resta un último detalle: la interfaz `MonsterStatic` **debe representar también
+que sus instancias, en tanto clases, son funciones constructoras**. De lo
+contrario ciertos usos de estos valores no estarían permitidos (por ejemplo, la
+función `createMonsters` definida en la segunda sección), ya que TypeScript no
+tendría cómo saber que los objetos del tipo `MonsterStatic` son clases que
+pueden crear objetos con `new`. Es preciso **añadir a la interfaz lo que en
+TypeScript se conoce como [*construct signature* o *distintivo de
+constructor*](https://www.typescriptlang.org/docs/handbook/2/functions.html#construct-signatures)**.
 
 ```ts
 interface MonsterStatic {
   maxAmount: number;
   new(...args: any[]): Monster;     // distintivo de constructor
 }
+```
 
+Nótese que si `Monster` es una interfaz en lugar de una clase **podemos
+prescindir de `implements Monster`** en las expresiones de clase. TypeScript
+infiere del distintivo de constructor que las instancias de las clases de tipo
+`MonsterStatic` serán de tipo `Monster`, por lo que especificarlo nuevamente en
+la expresión de clase es redundante:
+
+```ts
 const Orc: MonsterStatic = class {
   // ...
 }
 ```
 
-Nótese que ahora podemos prescindir de `implements Monster` en la expresión de
-clase. TypeScript infiere del distintivo de constructor que las instancias de
-las clases de tipo `MonsterStatic` serán de tipo `Monster`, por lo que
-especificarlo nuevamente en la expresión de clase es redundante.
-
-Otra opción es usar un método *factory* en lugar de un constructor, el cual
-deberá ser implementado como método estático:
+Nuestras clases representadas podrían tener constructores privados y **utilizar
+métodos *factory* estáticos para instanciar objetos**. En ese caso la interfaz
+estática no deberá contener un distintivo de constructor, sino el tipo de los
+métodos *factory* :
 
 ```ts
 interface MonsterStatic {
@@ -499,40 +552,28 @@ const Orc: MonsterStatic = class implements Monster {
   
   // ...
   
-  public create() {
+  public static create() {
     return new this();
   };
 
   // ...
 };
-
-function createMonsters(classes: MonsterStatic[]) {
-  const monsters: Monster[] = [];
-
-  for (const monsterClass of classes) {
-    for (let i = 0; i < monsterClass.maxAmount; i++) {
-      monsters.push(monsterClass.create());
-    }
-  }
-
-  return monsters;
-}
 ```
 
-:::info Valor de `this` en métodos estáticos y expresiones de clase nombradas
+:::info Valor de `this` en métodos estáticos - Expresiones de clase nombradas
 
 El método `create()` crea instancias de `Orc` mediante la expresión `new
 this()`. No usamos `new Orc()` porque esto no es una expresión válida para
-TypeScript: `Orc` es de tipo `MonsterStatic`, que el segundo ejemplo no incluye
-el distintivo de constructor. Podemos usar la palabra clave `this` porque en
-métodos estáticos no refiere a la instancia sino a la clase desde la que se
-invoca el método: la clase anónima definida mediante una expresión de clase.
-Normalmente `this` se usaría en un método estático para invocar otras
+TypeScript: `Orc` es de tipo `MonsterStatic`, que ahora no incluye el distintivo
+de constructor. La palabra clave **`this` en métodos estáticos no refiere a la
+instancia sino *a la clase* desde la que se invoca el método**. Por ello puede
+usarse aquí para referir a la clase anónima definida mediante una expresión de
+clase. Normalmente `this` se usaría en un método estático para invocar otras
 propiedades o métodos estáticos de la misma clase.
 
-Una alternativa al uso de `this` es que la expresión de clase no sea anónima,
-añadiendo algún nombre luego de la palabra clave `class`. Este identificador
-será una variable local, válida sólo dentro del cuerpo de la propia clase.
+Una alternativa al uso de `this` es **que la expresión de clase no sea anónima,
+añadiendo algún nombre luego de la palabra clave `class`**. Este identificador
+**será una variable *local***, válida sólo dentro del cuerpo de la propia clase.
 Podría repetirse el identificador `Orc`, que ya no será la variable de tipo
 `MonsterStatic` declarada con `const` sino una variable local que refiere a lo
 mismo que a `this` dentro de la clase:
@@ -551,16 +592,19 @@ const Orc: MonsterStatic = class Orc implements Monster {
 
 :::
 
-Un primer problema con esta solución es lo que ocurriría si `Orc` tuviera que
-ser una clase abstracta. En primer lugar deberíamos modificar el distintivo de
-constructor en `MonsterStatic`, ya que es incompatible con clases abstractas que
-no pueden usarse para producir instancias con `new`. Esto se puede hacer porque
-[recientemente TypeScript introdujo la posibilidad de especificar distintivos de
-constructor
-abstractos](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-2.html#abstract-construct-signatures).
-Esta especificación es un tipo separado, ya que las interfaces no admiten
-miembros abstractos y por lo tanto no podrían incluirse dentro de una interfaz
-como `MonsterStatic`, que debe ser construida luego como una intersección:
+Esta solución es la primera que cumple con nuestros requerimientos iniciales.
+Sin embargo, tiene una serie de limitaciones.
+
+En primer lugar, veamos lo que ocurriría **si las clases representadas tuvieran
+que ser abstractas**. Primero deberíamos modificar el distintivo de constructor
+en `MonsterStatic`, ya que las clases abstractas no pueden crear instancias con
+`new`. Esto se puede hacer porque [recientemente TypeScript introdujo la
+posibilidad de **especificar distintivos de constructor
+abstractos**](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-2.html#abstract-construct-signatures).
+Dado que las interfaces no admiten miembros abstractos, el distintivo de
+constructor y los miembros estáticos se deben incluir en tipos diferentes que
+son reunidos [mediante una
+*intersección*](https://www.typescriptlang.org/docs/handbook/2/objects.html#intersection-types):
 
 ```ts
 type AbstractConstructor<T> = abstract new (...args: any[]) => T;
@@ -569,20 +613,20 @@ type MonsterStatic = { maxAmount: number; }
   & AbstractConstructor<Monster>;
 ```
 
-Resuelto esto, nos topamos ahora con que TypeScript no permite la definición de
-clases abstractas mediante expresiones de clase. Enunciados como el siguiente
-producen un error, ya que `abstract` no es interpretado como una palabra clave
-sino como un identificador &#8212;como el nombre de una variable, en este caso
-inexistente:
+Resuelto esto, nos topamos ahora con que **TypeScript no permite la definición
+de clases abstractas mediante expresiones de clase**. Enunciados como el
+siguiente producen un error, ya que `abstract` no es interpretado como una
+palabra clave sino como un identificador, como el nombre de una variable que en
+este caso es inexistente:
 
 ```ts
-const Orc: MonsterStatic = abstract class {
+const Orc: MonsterStatic = abstract class {   // Cannot find name 'abstract'
   // ...
 };
 ```
 
-Un pequeño rodeo nos permite sortear este problema, aunque no sea lo más
-elegante:
+Un pequeño rodeo nos permite sortear este problema, aunque el resultado es muy
+poco elegante:
 
 ```ts
 abstract class _Orc {
@@ -592,16 +636,16 @@ abstract class _Orc {
 const Orc: MonsterStatic = _Orc;
 ```
 
-Pero hay otro problema. Una consecuencia de caracterizar la constante `Orc` con
-el tipo `MonsterStatic` es que para TypeScript tanto el objeto devuelto por `new
-Orc()` como por `Orc.create()` será genéricamente de tipo `Monster` (y lo mismo
-ocurrirá para las clases `Zombie`, `Dragon`, etc.). Si hubieramos usado una
-declaración de clase o la constante `Orc` sin tipar, el tipo sería
+Veamos un segundo problema. Una consecuencia de caracterizar la constante `Orc`
+con el tipo `MonsterStatic` es que para TypeScript tanto el objeto devuelto por
+`new Orc()` como por `Orc.create()` será genéricamente de tipo `Monster` (y lo
+mismo ocurrirá para las clases `Zombie`, `Dragon`, etc.). Si hubieramos usado
+una declaración de clase o la constante `Orc` sin tipar, el tipo sería
 específicamente `Orc` (y `Zombie`, `Dragon`... para el resto de las clases). Es
-decir, con esta solución TypeScript no podrá discriminar que las instancias son
-de clases distintas. Esto se debe a que el distintivo de constructor contenido
-en `MonsterStatic` especifica de manera genérica que el constructor devuelve un
-objeto `Monster`.
+decir, **con esta solución TypeScript no podrá discriminar que las instancias
+son de clases distintas**. Esto se debe a que el distintivo de constructor
+contenido en `MonsterStatic` especifica de manera genérica que el constructor
+devuelve un objeto `Monster`.
 
 Esta consecuencia es problemática si las clases representadas además de incluir
 los miembros contenidos en `Monster` tienen propiedades y métodos de instancias
@@ -621,12 +665,12 @@ const orc = new Orc();    // variable de tipo Monster
 orc.enrage();             // inválido: la propiedad enrage no existe en Monster
 ```
 
-Veamos un último problema: *qué ocurre si las clases que debemos definir son
-tipos parametrizados o genéricos*. Supongamos que hay dos tipos de ataque que
-puede ejercer un monstruo, cuerpo a cuerpo y a distancia, con sus
-correspondientes tipos de armas. Podemos definir el tipo `Weapon` como un
-genérico cuyo parámetro corresponde al tipo de arma, y añadir a la interfaz
-`Monster` un método para equipar armas que utilice el mismo tipo de parámetro:
+En tercer lugar, veamos qué ocurre **si las clases que debemos definir son tipos
+parametrizados o *genéricos***. Supongamos que hay dos tipos de ataque que puede
+ejercer un monstruo, cuerpo a cuerpo y a distancia, con sus correspondientes
+tipos de armas. Podemos definir el tipo `Weapon` como un genérico cuyo parámetro
+corresponde al tipo de arma, y añadir a la interfaz `Monster` un método para
+equipar armas que utilice el mismo tipo de parámetro:
 
 ```ts
 type AttackType = 'ranged' | 'melee';
@@ -643,8 +687,8 @@ interface Monster<T extends AttackType> {
 ```
 
 Esta modificación no es compatible con la actual solución porque en una
-declaración de variable no tenemos dónde definir el nombre y el tipo del
-parámetro genérico. Si intentamos hacerlo de la siguiente manera se produce un
+declaración de variable **no tenemos dónde definir el nombre y el tipo del
+parámetro genérico**. Si intentamos hacerlo de la siguiente manera se produce un
 error:
 
 ```ts
@@ -653,8 +697,8 @@ const Orc: MonsterStatic<T extends AttackType> = class {    // Cannot find name 
 };
 ```
 
-Lo que necesitamos es una solución que nos permita emplear declaraciones de
-clase, con lo cual podremos definir nuestras clases representadas de la
+**Lo que necesitamos es una solución que nos permita emplear *declaraciones de
+clase***, con lo cual podremos definir nuestras clases representadas de la
 siguiente forma:
 
 ```ts
@@ -668,16 +712,18 @@ como instancias de `Orc` y no meramente de `Monster`.
 
 ### 4. Interfaz estática incluida en un tipo construido a partir de `InstanceType` e implementado por las clases representadas
 
-La solución que mostraremos ahora no es tan intuitiva como las anteriores,
-requiriendo algunos constructos algo artificiosos posibilitados por TypeScript.
-La clave de esta solución pasa por retomar la estrategia de nuestro segundo
-intento fallido: construir un tipo `Monster` que pueda ser empleado en una
-expresión de tipo `class Orc implements Monster` y que incluya los
-requerimientos de `MonsterStatic`.
+La solución que mostraremos ahora es menos intuitiva que las anteriores, ya que
+ya que explota las posibilidades ofrecidas por TypeScript de una forma bastante
+más artificiosa. La clave de esta solución es retomar la estrategia de nuestro
+segundo intento fallido: **construir un tipo `Monster` que pueda ser empleado en
+una expresión de tipo `class Orc implements Monster` y que incluya los
+requerimientos de `MonsterStatic`**.
 
-Partimos de estas versiones de nuestras interfaces desdobladas. Renombramos
+Incorporaremos el último requerimiento añadido en la sección anterior: nuestra
+solución debe poder aplicarse también a tipos parametrizados. Renombraremos
 `Monster` como `MonsterInstance` para distinguir la interfaz que representa
-nuestras instancias del tipo `Monster` que estamos intentando construir:
+nuestras instancias del tipo `Monster` que estamos intentando construir.
+Nuestras interfaces desdobladas son entonces las siguientes:
 
 ```ts
 interface MonsterInstance<T extends AttackType> {
@@ -694,9 +740,9 @@ interface MonsterStatic<T extends AttackType> {
 }
 ```
 
-El tipo `Monster` debe representar alguna manera que los objetos que representa
-son instancias de `MonsterStatic`. Para ello usaremos [el tipo `InstanceType`,
-uno de los tipos predefinidos por
+El tipo **`Monster` debe explicitar de alguna manera que los objetos que
+representa son instancias de `MonsterStatic`**. Para ello [**usaremos el tipo
+`InstanceType`**, uno de los tipos predefinidos por
 TypeScript](https://www.typescriptlang.org/docs/handbook/utility-types.html#instancetypetype).
 Se trata de un tipo parametrizado, cuyo parámetro debe ser cualquier tipo que
 contenga un distintivo de constructor, y se usa para representar el tipo de la
@@ -709,7 +755,8 @@ class _Monster {
 
 type Monster = InstanceType<typeof _Monster>;
 
-const monster: Monster = new _Monster();      // el tipo declarado y el de la instancia coinciden
+// el tipo declarado con la anotación y el de la instancia de _Monster coinciden
+const monster: Monster = new _Monster();
 ```
 
 En nuestro caso el tipo con distintivo de constructor es `MonsterStatic`.
@@ -725,30 +772,27 @@ class Orc<T extends AttackType> implements Monster<T> {
 
 Esto requerirá que `Orc` contenga todos los miembros de instancia contenidos en
 `MonsterInstance`. Sin embargo, aún no requiere la inclusión de la propiedad
-estática `maxAmount`. Esto tiene lógica porque `implements SomeInterface`
+estática `maxAmount`. Esto tiene lógica porque `implements SomeInterface` sólo
 impone requerimientos sobre la forma que tendrán *las instancias* de las clases
 definidas de este modo.
 
-El truco que emplearemos consiste en explotar los parámetros del tipo genérico
-`Monster` para imponer requerimientos adicionales. Así, además del parámetro de
-tipo `AttackType` requeriremos otro parámetro que extienda `MonsterStatic`. Ese
-parámetro requerirá que al usar `Monster` incluyamos además el tipo de una clase
-que pueda generar instancias de `MonsterInstance` y que contenga la propiedad
-estática `maxAmount`. Podemos usar este segundo parámetro como argumento de
-`InstanceType`.
+El truco que emplearemos explota la posibilidad de usar los parámetros de un
+tipo genérico para imponer requerimientos adicionales. Así, además del parámetro
+de tipo `AttackType`, **incluiremos en `Monster` otro parámetro que extienda
+`MonsterStatic`**. Esto nos permite reformular `Monster` de la siguiente manera:
 
 ```ts
 type Monster<T extends AttackType, S extends MonsterStatic<T>> = InstanceType<S>;
 ```
 
-Ahora bien, ¿cómo usamos esta versión modificada de `Monster` en la definición
-de nuestras clases representadas? ¿Qué tipo se puede emplear en lugar de `S`?
-Aquí emplearemos nuestro segundo truco: en los parámetros de `Monster` podemos
-hacer referencia a la propia clase `Orc` que estamos declarando. Si en el lugar
-de `S` ponemos `typeof Orc` TypeScript hará su magia: dado que `S` debe extender
-`MonsterStatic`, `Orc` no sólo debe incluir un constructor de instancias de
-`MonsterInstance` sino también la propiedad `maxAmount` incluida en
-`MonsterStatic`:
+Para comprobar la utilidad de esto hay que ver cómo usamos esta versión
+modificada de `Monster` en la definición de nuestras clases representadas. ¿Qué
+tipo se puede emplear en lugar de `S`? Aquí emplearemos nuestro segundo truco:
+**en los parámetros de `Monster` podemos hacer referencia a la propia clase
+`Orc` que estamos declarando**. Si en el lugar de `S` ponemos `typeof Orc`
+TypeScript hará su magia: dado que `S` debe extender `MonsterStatic`, `Orc` no
+sólo debe incluir un constructor de instancias que satisfagan `MonsterInstance`,
+sino también la propiedad `maxAmount` incluida en `MonsterStatic`:
 
 ```ts
 class Orc<T extends AttackType> implements Monster<T, typeof Orc> {
@@ -761,8 +805,10 @@ declaración de variable `const Orc: MonsterStatic`, lo estamos haciendo al
 incluir `typeof Orc` como parámetro de un genérico que debe cumplir con `S
 extends MonsterStatic`.
 
-Supongamos que queremos agregar la habilidad especial `enrage()` a `Orc`. Los
-problemas que encontramos con la anterior solución ya no aparecen:
+Esta solución **permite a TypeScript reconocer miembros especiales de algunas
+clases representadas**. Supongamos que queremos agregar la habilidad especial
+`enrage()` a `Orc`. Los problemas que encontramos con la anterior solución ya no
+aparecen:
 
 ```ts
 class Orc<T extends AttackType> implements Monster<T, typeof Orc> {
@@ -777,23 +823,34 @@ const orc = new Orc<'melee'>();    // variable de tipo Orc
 orc.enrage();                      // enunciado válido
 ```
 
-Otra ventaja de esta solución es que es generalizable. Supongamos que queremos
-aplicar este mismo patrón a distintos conjuntos de clases: no sólo a las clases
-para construir monstruos, sino también para construir armas, items del
-inventario, etc., cada conjunto con sus respectivos miembros estáticos. En lugar
-de construir cada tipo `Monster`, `Weapon`, etc., a partir de su respectiva
-interfaz estática podemos construir un mismo tipo genérico `StaticImplements`
-que recibe en cada caso de uso la interfaz estática como parámetro:
+**Otra ventaja de esta solución es que es generalizable**. Supongamos que no
+sólo los monstruos son clases representadas que deben representar una interfaz
+estática, sino también las armas, los items del inventario, etc., cada tipo de
+entidad con su respectiva interfaz estática. En lugar de repetir este patrón
+construyendo un tipo `Monster`, `Weapon`, etc., a partir de su respectiva
+interfaz estática, podemos generalizarlo: **construir un mismo tipo genérico
+`StaticImplements` que recibe como argumento la interfaz estática que le
+corresponde en cada caso de uso**:
 
 ```ts
+// distintivo de constructor que abarca a clases abstractas y concretas
+// las interfaces estáticas deberán extender este tipo
 type Constructor = abstract new (...args: any[]) => any;
 
 type StaticImplements<
-  StaticInterface extends Constructor, 
+  StaticInterface extends Constructor,    // nuevo parámetro para interfaz estática
   TypeOfClass extends StaticInterface
 > = InstanceType<TypeOfClass>;
 
+interface MonsterStatic<T extends AttackType> {
+  // ...
+}
+
 interface WeaponStatic<T extends AttackType> {
+  // ...
+}
+
+interface ItemStatic {
   // ...
 }
 
@@ -806,17 +863,21 @@ class Sword<T extends AttackType>
   implements StaticImplements<WeaponStatic<T>, typeof Sword> {
     // ...
   }
+
+class Book implements StaticImplements<ItemStatic, typeof Book> {
+  // ...
+}
 ```
 
-Esta solución generalizada nos permite simplificar los nombres de las interfaces
-de instancia; `MonsterInstance` puede volver a llamarse `Monster` sin riesgos de
-confusión.
+Esta solución generalizada **nos permite simplificar los nombres de las
+interfaces de instancia**: `MonsterInstance` puede volver a llamarse `Monster`
+sin riesgos de confusión.
 
-Si bien esta solución cumple con todos nuestros requisitos, las definiciones de
-las clases representadas se vuelven demasiado extensas y a simple vista resulta
-difícil de comprender la razón de esa verbosidad. Siguiendo los razonamientos
-que hemos hecho aquí puede comprenderse, pero alguien que ve por primera vez un
-código escrito de esa forma podría no entenderlo sin los comentarios apropiados.
+Si bien esta solución cumple con todos nuestros requisitos, **las definiciones
+de las clases representadas se vuelven demasiado extensas y rebuscadas**.
+Alguien que vea a simple vista un código escrito de esa forma seguramente no
+entendería a primera vista el porqué de estos constructos verbosos y
+artificiosos, lo que requeriría comentar el código de forma clara.
 
 OTRO PROBLEMA: CLASES SIN CONSTRUCTORES (ABSTRACTAS O CON CONSTRUCTOR PRIVADO)
 
