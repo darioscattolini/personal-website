@@ -6,9 +6,12 @@ sidebar_label: "Interfaz para miembros estáticos de clases"
 sidebar_position: 1
 tags:
   - TypeScript
-  - interface
+  - interfaz
   - static
-  - class
+  - clase
+  - InstanceType
+  - decorador
+  - expresión de clase
 ---
 
 import TOCInline from '@theme/TOCInline';
@@ -232,7 +235,7 @@ tipos de los miembros estáticos. En el caso de `Example` se vería así:
 ```ts
 type TypeOfExample = {
   // distintivo de constructor
-  new (parameter: string): {
+  new(parameter: string): {
     instanceProp1: string,
     instanceProp2: string,
     instanceMethod(): string
@@ -264,7 +267,7 @@ intuitivos que no llegan a cumplir con nuestros requerimientos o fracasan por
 limitaciones en la sintaxis de TypeScript. Los otros tres intentos representan
 soluciones correctas pero con distintas desventajas.
 
-### 1. Interfaz estática implementada en una clase madre
+### 1. Clase madre con miembros estáticos
 
 **Una forma intuitiva de abstraer funcionalidad común entre diferentes clases es
 utilizando el mecanismo de *herencia***, presente tanto [en
@@ -336,7 +339,7 @@ discusión abierta en torno a la posibilidad de incluir esta funcionalidad dentr
 del lenguaje](https://github.com/microsoft/TypeScript/issues/34516), pero aun no
 parece estar en vías de resolución.
 
-### 2. Interfaz estática incluida en una interfaz implementada por las clases representadas
+### 2. Interfaz de instancia con miembros estáticos
 
 [Las *interfaces* son otro tipo de abstracción que pueden representar elementos
 comunes a diversas clases y
@@ -353,7 +356,8 @@ determinado método y obtener determinado tipo de valor) sin acoplarse con
 ninguna implementación particular del mismo.
 
 Podemos intentar definir una interfaz a ser implementada por las clases
-representadas, incluyendo en ella nuestra interfaz estática. El resultado
+representadas. Esa interfaz representaría a las *instancias* de estas clases,
+pero podríamos intentar incluir en ella nuestra interfaz estática. El resultado
 quedaría así:
 
 ```ts
@@ -422,7 +426,7 @@ clases mismas en cuanto valores. Sin embargo, **por el momento esta sintaxis no
 está incluida en TypeScript**, [aunque su incorporación está en
 discusión](https://github.com/microsoft/TypeScript/issues/33892).
 
-### 3. Definición de las clases representadas mediante expresiones de clase tipadas con la interfaz estática
+### 3. Expresiones de clase tipadas con la interfaz estática
 
 A diferencia de otros lengujes como Java, **en JavaScript las clases son valores
 como cualquier otro**. No sólo ofrecen una sintaxis especial para construir
@@ -592,14 +596,13 @@ const Orc: MonsterStatic = class Orc implements Monster {
 
 :::
 
-Esta solución es la primera que cumple con nuestros requerimientos iniciales.
-Sin embargo, tiene una serie de limitaciones.
-
-En primer lugar, veamos lo que ocurriría **si las clases representadas tuvieran
-que ser abstractas**. Primero deberíamos modificar el distintivo de constructor
-en `MonsterStatic`, ya que las clases abstractas no pueden crear instancias con
-`new`. Esto se puede hacer porque [recientemente TypeScript introdujo la
-posibilidad de **especificar distintivos de constructor
+Esta solución es la primera que cumple con nuestros requerimientos iniciales,
+pero tiene una serie de limitaciones. En primer lugar, veamos lo que ocurriría
+**si las clases representadas tuvieran que ser abstractas**. Primero deberíamos
+modificar el distintivo de constructor en `MonsterStatic`, ya que las clases
+abstractas no pueden crear instancias con `new`. Esto se puede hacer porque
+[recientemente TypeScript introdujo la posibilidad de **especificar distintivos
+de constructor
 abstractos**](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-2.html#abstract-construct-signatures).
 Dado que las interfaces no admiten miembros abstractos, el distintivo de
 constructor y los miembros estáticos se deben incluir en tipos diferentes que
@@ -609,8 +612,7 @@ son reunidos [mediante una
 ```ts
 type AbstractConstructor<T> = abstract new (...args: any[]) => T;
 
-type MonsterStatic = { maxAmount: number; } 
-  & AbstractConstructor<Monster>;
+type MonsterStatic = { maxAmount: number; } & AbstractConstructor<Monster>;
 ```
 
 Resuelto esto, nos topamos ahora con que **TypeScript no permite la definición
@@ -710,11 +712,11 @@ resolvería también el problema de los miembros de instancia específicos como
 `enrage`, ya que las instancias creadas con `new Orc()` ahora serían reconocidas
 como instancias de `Orc` y no meramente de `Monster`.
 
-### 4. Interfaz estática incluida en un tipo construido a partir de `InstanceType` e implementado por las clases representadas
+### 4. Interfaz estática asignada mediante `InstanceType`
 
 La solución que mostraremos ahora es menos intuitiva que las anteriores, ya que
-ya que explota las posibilidades ofrecidas por TypeScript de una forma bastante
-más artificiosa. La clave de esta solución es retomar la estrategia de nuestro
+explota las posibilidades ofrecidas por TypeScript de una forma bastante más
+artificiosa. La clave de esta solución es retomar la estrategia de nuestro
 segundo intento fallido: **construir un tipo `Monster` que pueda ser empleado en
 una expresión de tipo `class Orc implements Monster` y que incluya los
 requerimientos de `MonsterStatic`**.
@@ -730,12 +732,12 @@ interface MonsterInstance<T extends AttackType> {
   readonly type: string;
   damage: number;
   hitPoints: number;
-  attack (target: Character): void;
+  attack(target: Character): void;
   equip(weapon: Weapon<T>): void;
 }
 
 interface MonsterStatic<T extends AttackType> {
-  new (...args: any[]): MonsterInstance<T>;
+  new(...args: any[]): MonsterInstance<T>;
   maxAmount: number;
 }
 ```
@@ -870,39 +872,57 @@ class Book implements StaticImplements<ItemStatic, typeof Book> {
 ```
 
 Esta solución generalizada **nos permite simplificar los nombres de las
-interfaces de instancia**: `MonsterInstance` puede volver a llamarse `Monster`
-sin riesgos de confusión.
+interfaces de instancia**. Ya no necesitamos reservarnos `Monster` para el alias
+de `InstanceType`, por lo que `MonsterInstance` puede volver a llamarse
+`Monster`.
 
-Si bien esta solución cumple con todos nuestros requisitos, **las definiciones
-de las clases representadas se vuelven demasiado extensas y rebuscadas**.
-Alguien que vea a simple vista un código escrito de esa forma seguramente no
-entendería a primera vista el porqué de estos constructos verbosos y
-artificiosos, lo que requeriría comentar el código de forma clara.
+Veamos ahora si algunas variantes de la solución anterior también pueden
+aplicarse a esta:
 
-OTRO PROBLEMA: CLASES SIN CONSTRUCTORES (ABSTRACTAS O CON CONSTRUCTOR PRIVADO)
+* **`Monster` puede ser una clase madre** en lugar de una mera interfaz con
+  mínimas modificaciones en el código para implementar la herencia.
+* **Las clases representadas también pueden ser abstractas**. Sólo hace falta
+  redefinir el distintivo de constructor de la misma forma que en la sección
+  anterior para admitir constructores abstractos.
+* Sin embargo, **no es posible sustituir el constructor por un método 
+  *factory** estático* como `create` para instanciar monstruos: el tipo
+  `InstanceType` requiere como argumento un tipo que incluya un distintivo de
+  constructor.
 
-Es por ello que en la siguiente sección ofrecemos otra solución más concisa y
-elegante.
+En consecuencia, se trata de una solución potente que cumple con todos nuestros
+requisitos. Sin embargo, **las definiciones de las clases representadas se
+vuelven demasiado extensas y rebuscadas**. Alguien que vea a simple vista un
+código escrito de esa forma seguramente no entendería a primera vista el porqué
+de estos constructos verbosos y artificiosos, lo que requeriría comentar el
+código de forma clara. Es por ello que en la siguiente sección ofrecemos otra
+solución más concisa y elegante.
 
-### 5. Asignación de la interfaz estática mediante un decorador
+### 5. Interfaz estática asignada mediante un decorador
 
-Los *decoradores* son una funcionalidad cuya inclusión en JavaScript está en
-discusión y en TypeScript es de carácter experimental (sujeta a futuros cambios,
-probablemente en función de cómo se termine de implementar en JavaScript). Éstos
-[*proveen una forma de añadir anotaciones y una sintaxis de metaprogramación a
+Hay una funcionalidad cuya inclusión en JavaScript está en discusión y en
+TypeScript es de carácter experimental: se trata de [**los *decoradores*, que
+proveen una forma de añadir anotaciones y una sintaxis de metaprogramación a
 las declaraciones de clases y sus
-miembros*](https://www.typescriptlang.org/docs/handbook/decorators.html). Los
+miembros**](https://www.typescriptlang.org/docs/handbook/decorators.html). Los
 decoradores en esencia son funciones que reciben como argumento la clase a la
-que se aplican y la transforman de alguna manera.
+que se aplican y la transforman de alguna manera. Como hemos dicho, son una
+sintaxis experimental que puede estar sujeta cambios, probablemente en función
+de cómo se termine de implementar en JavaScript.
 
-En nuestro caso no queremos realizar ninguna transformación de las clases
-representadas, sino lograr que TypeScript fuerce que implementen una interfaz
-estática. Esto requiere en primer lugar que la función que usemos como decorador
-no devuelva nada, ya que si no tiene un `return` devuelve la misma clase que
-recibe como argumento. En segundo lugar, es necesario tipar el parámetro de la
-función con nuestra interfaz `MonsterStatic`, para que el decorador requiera que
-las clases a la que se aplica implementen dicha interfaz. Nuestro caso de uso se
-vería así:
+Veremos ahora que los decoradores pueden ser útiles para construir otra solución
+nuestro problema. En nuestro caso **no queremos realizar ninguna transformación
+de las clases representadas, sino lograr que TypeScript fuerce que implementen
+una interfaz estática**. Esto implica dos cosas:
+
+* La función que usemos como decorador **no debe devolver nada**, ya que si no 
+  tiene un `return` devuelve la misma clase que recibe como argumento. 
+* Es necesario **tipar el parámetro de la función con la interfaz estática que 
+  se desea requerir**. Si el parámetro de la función debe satisfacer la interfaz 
+  `MonsterStatic`, al usarla como un decorador TypeScript requerirá que la clase
+  implemente dicha interfaz. 
+
+Nuestro caso de uso entonces se vería así, utilizando las versiones canónicas de
+`Monster` y `MonsterStatic` definidas anteriormente:
 
 ```ts
 interface Monster<T extends AttackType> {
@@ -914,13 +934,14 @@ interface Monster<T extends AttackType> {
 }
 
 interface MonsterStatic<T extends AttackType> {
-  new (...args: any[]): Monster<T>;
+  new(...args: any[]): Monster<T>;
   maxAmount: number;
 }
 
-function MonsterClass<T extends AttackType>(monsterClass: MonsterStatic<T>) { }    // decorador
+// decorador
+function MonsterClass<T extends AttackType>(monsterClass: MonsterStatic<T>) { }
 
-@MonsterClass       // aplicación del decorador
+@MonsterClass                     // aplicación del decorador
 class Orc<T extends AttackType> {
   // ...
 
@@ -943,8 +964,8 @@ como el distintivo de constructor de esta interfaz devuelve un objeto de tipo
 `Monster`, TypeScript también exigirá que las clases implementen los miembros de
 instancia contenidos en dicha interfaz.
 
-Estas clases en tanto objetos son reconocidas como pertenecientes al tipo
-`MonsterStatic`, lo que facilita su uso como valores:
+Estas clases en tanto objetos **son reconocidas como pertenecientes al tipo
+`MonsterStatic`, lo que facilita su uso como valores**:
 
 ```ts
 const monsterClasses: MonsterStatic<AttackType>[] = [
@@ -954,8 +975,8 @@ const monsterClasses: MonsterStatic<AttackType>[] = [
 
 Finalmente, las instancias de estas clases son reconocidas como instancias de
 `Orc`, `Zombie` y cada clase respectiva, y no del tipo más general `Monster`.
-Esto implica que los miembros de dichas clases que no son parte de `Monster`
-también son reconocidos por el compilador:
+Esto implica que **los miembros de dichas clases que no son parte de `Monster`
+también son reconocidos por el compilador**:
 
 ```ts
 const orc = new Orc();
@@ -963,11 +984,11 @@ orc.enrage();                               // este enunciado es válido
 ```
 
 Esta solución cumple entonces con todos nuestros requerimientos. Al igual que la
-solución anterior, también es generalizable. Si queremos aplicar este mismo
-patrón a distintos conjuntos de clases, en lugar de construir diferentes
-decoradores podemos usar una misma función *factory* para producirlos a todos,
+solución anterior, **también es generalizable**. Si queremos aplicar este mismo
+patrón a distintos conjuntos de clases, **en lugar de construir diferentes
+decoradores podemos usar una misma función *factory* para producirlos a todos**,
 siempre que se le pase la interfaz estática correspondiente como argumento
-genérico:
+de genérico:
 
 ```ts
 function StaticImplements<T>() {      // factory de decoradores
@@ -989,29 +1010,44 @@ class Sword {
 }
 ```
 
-La desventaja de esta solución es que depende de una sintaxis experimental que
-podría quedar obsoleta ante una actualización de TypeScript. Para poder usarla
-es necesario habilitar la opción `experimentalDecorators: true` en
-`tsconfig.json`.
+Nótese que ahora debemos incluir los paréntesis al invocar la función *factory*,
+ya que necesitamos que esta se ejecute para obtener el decorador.
+
+En cuanto a su capacidad de replicar las variantes de las soluciones anteriores,
+esta solución es óptima:
+
+* **`Monster` puede ser una clase madre**.
+* **Las clases representadas también pueden ser abstractas** si el distintivo de
+  constructor en `MonsterStatic` es abstracto.
+* Para la instanciación de monstruos **es posible sustituir el constructor por
+  un método *factory* estático**.
+
+Esta solución es concisa y elegante, pero **depende de una sintaxis experimental
+que podría quedar obsoleta** ante una actualización de TypeScript. Para poder
+usarla es necesario **habilitar la opción `experimentalDecorators: true` en
+`tsconfig.json`**.
 
 ## Un caso de uso más realista
 
 El caso de uso que hemos utilizado hasta ahora nos ha facilitado presentar el
-problema de una forma simple e ir complejizándolo de manera sucesiva a medida
-que íbamos presentando las distintas soluciones. Sin embargo, no me parece un
-ejemplo demasiado realista. En lugar de regular la creación de instancias de
-monstruos mediante propiedades estáticas contenidas en sus propias clases,
-parece más lógico que haya una clase separada que contenga las instrucciones
-para poblar los diferentes escenarios del juego.
+problema de una forma simple e ir complejizándolo con nuevos requerimientos a
+medida que íbamos presentando las distintas soluciones. Sin embargo, no me
+parece un ejemplo demasiado realista. En lugar de regular la creación de
+instancias de monstruos mediante propiedades estáticas contenidas en sus propias
+clases, lo más apropiado sería que haya una clase separada que se encargue de
+poblar los diferentes escenarios del juego a partir de los datos de
+configuración que se le provean. Una interfaz como `MonsterStatic` no tiene una
+verdadera razón de ser.
 
-Veamos entonces un caso de uso más realista. Supongamos que estamos
-desarrollando una tienda online que debe mostrar listas ordenadas de diferentes
-entidades. Por ejemplo, rankings de clientes, empleados y productos. Estas
-entidades serán representadas en la aplicación mediante las clases `Customer`,
-`Employee` y `Article`. Cada una de estas clases puede admitir un método de
-ordenamiento diferente para sus respectivas instancias: los clientes serán
-ordenados en función de la cantidad de productos comprados, los empleados en
-función de su antigüedad y los artículos en función de su popularidad.
+Para terminar este artículo veremos finalmente un caso de uso más realista.
+Supongamos que estamos desarrollando una tienda online que debe mostrar listas
+ordenadas de diferentes entidades. Por ejemplo, rankings de clientes, empleados
+y productos. Estas entidades serán representadas en la aplicación mediante las
+clases `Customer`, `Employee` y `Article`. Cada una de estas clases puede
+admitir un método de ordenamiento diferente para sus respectivas instancias: los
+clientes serán ordenados en función de la cantidad de productos comprados, los
+empleados en función de su antigüedad y los artículos en función de su
+popularidad.
 
 Cada clase tendrá las propiedades y métodos correspondientes a su tipo. Por
 ejemplo, podrían implementar las siguientes interfaces:
@@ -1044,7 +1080,21 @@ estática de éstas implemente la siguiente interfaz:
 
 ```ts
 interface Sorting<T> {
-  sort: (unsorted: T[]) => T[];
+  sort(unsorted: T[]): T[];
+}
+```
+
+También es necesario incluir dentro de `Sorting` un distintivo de constructor.
+Esto permitirá que TypeScript asocie el parámetro `T` con el tipo de las
+instancias de cada clase que implementer `Sorting`. De lo contrario el método
+`sort` de cada clase podría admitir como parámetro cualquier tipo de valor,
+usándose por ejemplo `Article.sort` para ordenar números o instacias de
+`Customer`. La interfaz resultante es:
+
+```ts
+interface Sorting<T> {
+  new(...args: any[]): T
+  sort(unsorted: T[]): T[];
 }
 ```
 
@@ -1054,30 +1104,23 @@ Lo que debemos hacer entonces es reemplazar las interfaces `Customer`,
 no admite que las interfaces estáticas sean tipos parametrizados como `Sorting`.
 Nos quedan las soluciones que usan `InstanceType` y decoradores.
 
-### Solución empleando `InstanceType`
+### Uso de `InstanceType`
 
-Esta solución requiere que incluyamos en `Sorting` un distintivo de constructor
-para poder utilizarlo como argumento de `InstanceType`. El resultado es el
-siguiente:
+Dado que `Sorting` ya incluye un distintivo de constructor, puede ser utilizado
+directamente como argumento de `InstanceType`. El tipo que debe implementar cada
+una de nuestras clases será entonces el siguiente:
 
 ```ts
-interface Sorting<T> {
-  new (...args: any[]): T
-  sort: (unsorted: T[]) => T[];
-}
-
 type Sortable<T, S extends Sorting<T>> = InstanceType<S>;
 ```
 
-El primer parámetro `T` nos permite introducir un argumento de genérico en
-`Sorting` para especificar que la clase ordena elementos del tipo `T`, y a la
-vez usar el mismo argumento en el distintivo de constructor para especificar que
-la clase crea instancias del tipo `T`.
+El parámetro `T` en `Sortable` representa el tipo de entidad que es instanciada
+por el constructor y ordenada por el método estático `sort`.
 
-Luego podemos construir nuestras clases de la siguiente manera:
+Ahora podemos construir nuestras clases representadas de la siguiente manera:
 
 ```ts
-class Customer implements SortableClass<Customer, typeof Customer>{
+class Customer implements Sortable<Customer, typeof Customer>{
   constructor(
     public name: string,
     public email: string,
@@ -1089,7 +1132,7 @@ class Customer implements SortableClass<Customer, typeof Customer>{
   }
 }
 
-class Employee implements SortableClass<Employee, typeof Employee>{
+class Employee implements Sortable<Employee, typeof Employee>{
   constructor(
     public name: string,
     public employeeNumber: string,
@@ -1101,7 +1144,7 @@ class Employee implements SortableClass<Employee, typeof Employee>{
   }
 }
 
-class Article implements SortableClass<Article, typeof Article>{
+class Article implements Sortable<Article, typeof Article>{
   constructor(
     public name: string,
     public ean: string,
@@ -1115,12 +1158,12 @@ class Article implements SortableClass<Article, typeof Article>{
 ```
 
 Esta solución cumple con todos nuestros requerimientos. Por ejemplo, podemos
-construir un componente `SortedList` para mostrar como un elemento html de tipo
-`<ol>` nuestras listas de elementos ordenados, haciendo uso de los tipos antes
-desarrollados. El método `render` del componente devuelve una lista html con la
-cantidad de elementos especificados en su argumento. Aquí optamos por construir
-el componente genérico como una clase abstracta y usar distintas clases hijas
-para cada tipo de lista:
+construir un componente `SortedList` para que nuestros rankings se muestren como
+un elemento HTML de tipo `<ol>`. Esto muestra la capacidad de manipular
+programáticamente los tipos antes desarrollados. El método `render` del
+componente devuelve una lista HTML con la cantidad de elementos especificados en
+su argumento. Aquí optamos por construir el componente genérico como una clase
+abstracta y usar distintas clases hijas para cada tipo de lista:
 
 ```ts
 abstract class SortedList<T extends Sorting<any>> {
@@ -1156,26 +1199,69 @@ class ArticleList extends SortedList<typeof Article> {
 }
 ```
 
-Aquí se puede ver el ejemplo completo en funcionamiento. Nótese que hemos
-abstraido una clase `Named` de nuestras clases representadas para implementar el
-método `toString`, ya que éste que es utilizado implícitamente por `render` en
-`SortedList`. También hemos implementado el método `sort` en dichas clases según
-los criterios de ordenamiento antes mencionados.
+### Uso de un decorador
 
-<iframe class="stackblitz"
-  src="https://stackblitz.com/edit/typescript-hr3gpq?ctl=1&embed=1&file=index.ts&hideExplorer=1&hideNavigation=1&theme=dark"
-></iframe>
+Para esta segunda solución definiremos el siguiente decorador:
 
-### Solución empleando un decorador
+```ts
+function SortingClass<T>(sortingClass: Sorting<T>) { }
+```
+
+Luego podemos construir las clases representadas de la siguiente manera:
+
+```ts
+@SortingClass
+class Customer {
+  constructor(
+    public name: string,
+    public email: string,
+    public purchases: number
+  ) {}
+
+  public static sort(unsorted: Customer[]): Customer[] {
+    // ...
+  }
+}
+
+@SortingClass
+class Employee {
+  constructor(
+    public name: string,
+    public employeeNumber: string,
+    public joiningDate: Date
+  ) {}
+
+  public static sort(unsorted: Employee[]): Employee[] {
+    // ...
+  }
+}
+
+@SortingClass
+class Article {
+  constructor(
+    public name: string,
+    public ean: string,
+    public purchases: number
+  ) {}
+
+  public static sort(unsorted: Article[]): Article[] {
+    // ...
+  }
+}
+```
+
+El componente `SortedList` y sus diferentes clases derivadas pueden ser
+construidos exactamene igual a como lo hicimos en la solución anterior.
 
 ## Referencias
 
-Este tópico ha sido discutido en diversos hilos de discusión en el repositorio
-de TypeScript. Las discusiones han girado en torno a la necesidad de hacer
-modificaciones a TypeScript para que haya una sintaxis sencilla para este tipo
-de casos de uso. Allí se pueden encontrar diversos ejemplos de uso de interfaces
-estáticas, así como soluciones alternativas y propuestas para incorporar nuevas
-funcionalidades a TypeScript:
+Este tópico ha sido discutido extensamente en el repositorio de TypeScript ante
+los reiterados pedidos de incluir en el lenguaje una sintaxis más sencilla para
+este tipo de casos de uso. Allí se pueden encontrar diversos ejemplos que
+requieren el uso de interfaces estáticas, soluciones alternativas dentro de las
+posibilidades que ofrece TypeScript hoy, y propuestas para incorporar nuevas
+funcionalidades a TypeScript que permitan trabajar con estas interfaces de forma
+más clara y directa:
 
 * [#1263 - Introduce a way to enforce a static
   contract](https://github.com/microsoft/TypeScript/issues/1263)
