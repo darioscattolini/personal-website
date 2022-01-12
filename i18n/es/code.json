@@ -183,7 +183,56 @@
     "message": "Etiquetas",
     "description": "The title of the tag list page"
   },
+  "theme.ErrorPageContent.title": {
+    "message": "Esta página ha colapsado.",
+    "description": "The title of the fallback page when the page crashed"
+  },
+  "theme.ErrorPageContent.tryAgain": {
+    "message": "Inténtalo nuevamente",
+    "description": "The label of the button to try again when the page crashed"
+  },
+  "theme.DocSidebarItem.toggleCollapsedCategoryAriaLabel": {
+    "message": "Expande o contrae la categoría '{label}'",
+    "description": "The ARIA label to toggle the collapsible sidebar category"
+  },
   "index.header": {
     "message": "Desarrollador front-end con inclinaciones full-stack"
+  },
+  "HomepageFeatures.codingPapers.featureDescription": {
+    "message": "Mis artículos de programación contienen breves textos técnicos. Cuando descubro algo útil para compartir lo incluyo aquí: tips de programación, técnicas para resolver problemas particulares, algo de teoría, etc.",
+    "description": "Coding papers feature description"
+  },
+  "HomepageFeatures.codingPapers.featureTitle": {
+    "message": "Textos sobre programación",
+    "description": "Coding papers feature title"
+  },
+  "HomepageFeatures.codingPapers.featureImage": {
+    "message": "/es/img/papers.png",
+    "description": "Coding papers feature image path"
+  },
+  
+  "HomepageFeatures.about.featureTitle": {
+    "message": "Sobre mí",
+    "description": "About feature title"
+  },
+  "HomepageFeatures.about.featureImage": {
+    "message": "/es/img/about.png",
+    "description": "About feature image path"
+  },
+  "HomepageFeatures.about.featureDescription": {
+    "message": "También puedes encontrar más información sobre mí: una breve biografía, mis habilidades y experiencia, y un portfolio con una selección de mis proyectos más relevantes.",
+    "description": "About feature description"
+  },
+  "HomepageFeatures.blog.featureTitle": {
+    "message": "Mi blog",
+    "description": "Blog feature title"
+  },
+  "HomepageFeatures.blog.featureImage": {
+    "message": "/es/img/blog.png",
+    "description": "Blog feature image path"
+  },
+  "HomepageFeatures.blog.featureDescription": {
+    "message": "En mi blog comparto información sobre temas más amplios: reseño contenido o herramientas que me parecen útiles, comparto proyectos que me gustan y discuto temas por fuera de la programación.",
+    "description": "Blog feature description"
   }
 }

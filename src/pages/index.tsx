@@ -2,10 +2,10 @@ import React from 'react';
 import clsx from 'clsx';
 import Typewriter from 'typewriter-effect';
 import Layout from '@theme/Layout';
-import Translate, { translate } from '@docusaurus/Translate';
+import { translate } from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
-import HomepageFeatures from '../components/HomepageFeatures';
+import HomepageFeatures from '../components/HomepageFeatures/HomepageFeatures';
 
 function HomepageHeader() {
   return (
