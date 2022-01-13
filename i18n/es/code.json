@@ -195,8 +195,25 @@
     "message": "Expande o contrae la categoría '{label}'",
     "description": "The ARIA label to toggle the collapsible sidebar category"
   },
-  "index.header": {
-    "message": "Desarrollador front-end con inclinaciones full-stack"
+  "index.meta.title": {
+    "message": "Darío Scattolini | Desarrollador front-end localizado en Barcelona",
+    "description": "Home Page meta title"
+  },
+  "index.meta.description": {
+    "message": "Sitio web personal de Darío Scattolini - Desarrollador web junior - Artículos sobre programación, blog, portfolio y más...",
+    "description": "Home Page meta description"
+  },
+  "index.header.subtitle": {
+    "message": "Desarrollador front-end con inclinaciones full-stack",
+    "description": "Header/hero subtitle in Home Page"
+  },
+  "index.about.title": {
+    "message": "Hola! Soy Darío. Bienvenido a mi web!",
+    "description": "About title in Home Page"
+  },
+  "index.about.content": {
+    "message": "Soy desarrollador web (y filósofo!) especializado en las tecnologías front-end del stack de JavaScript. En 2019 comencé a programar y al poco tiempo adquirí un buen dominio de JavaScript y Angular. Trabajando como freelancer también tuve la oportunidad de utilizar PrestaShop, PHP y Symfony. Tengo 32 años, soy de Argentina y actualmente vivo en Barcelona.",
+    "description": "About content in Home Page"
   },
   "HomepageFeatures.codingPapers.featureDescription": {
     "message": "Mis artículos de programación contienen breves textos técnicos. Cuando descubro algo útil para compartir lo incluyo aquí: tips de programación, técnicas para resolver problemas particulares, algo de teoría, etc.",
@@ -210,7 +227,6 @@
     "message": "/es/img/papers.png",
     "description": "Coding papers feature image path"
   },
-  
   "HomepageFeatures.about.featureTitle": {
     "message": "Sobre mí",
     "description": "About feature title"
