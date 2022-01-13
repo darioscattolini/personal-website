@@ -1,6 +1,6 @@
 {
   "copyright": {
-    "message": "Copyright © 2021 Darío Scattolini - <a href=\"./credits\">Credits</a> - Built with Docusaurus",
+    "message": "Copyright © 2022 Darío Scattolini - Sitio web construido con <a href=\"https://docusaurus.io/\" target=\"_blank\">Docusaurus</a> - <a href=\"./credits\">Créditos</a> de las imágenes",
     "description": "The footer copyright"
   }
 }

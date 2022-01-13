@@ -66,12 +66,16 @@ const navbar = {
 };
 
 const copyright = `Copyright © ${new Date().getFullYear()} Darío Scattolini`;
-const credits = '<a href="./credits">Credits</a>';
+const credits = 'Pictures <a href="./credits">credits</a>';
+const builtWith = `
+  Website built with 
+  <a href="https://docusaurus.io/" target="_blank">Docusaurus</a>
+`;
 
 /** @type {import('@docusaurus/preset-classic').ThemeConfig['footer']} */
 const footer = {
   style: 'dark',
-  copyright: `${copyright} - ${credits} - Built with Docusaurus`,
+  copyright: `${copyright} - ${builtWith} - ${credits}`,
 };
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
