@@ -1,0 +1,30 @@
+.container {
+  padding-top: 7em;
+  padding-bottom: 7em;
+}
+
+.header {
+  margin: auto;
+  max-width: 540px;
+  width: 100%;
+  text-align: center;
+}
+
+.sectionName {
+  font-size: 1.1em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary-dark);
+}
+
+.title {
+  font-size: 2.2em;
+}
+
+.dark {
+  background-color: var(--ifm-color-dark-background);
+  color: var(--ifm-color-white);
+}
+
+.dark .sectionName {
+  color: var(--ifm-color-primary-lightest);
+}
