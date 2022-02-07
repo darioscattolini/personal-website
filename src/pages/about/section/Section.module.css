@@ -4,7 +4,7 @@
 }
 
 .header {
-  margin: auto;
+  margin: auto auto 3em;
   max-width: 540px;
   width: 100%;
   text-align: center;

@@ -6,45 +6,79 @@ type SkillsProps = {
   skills: Skill[];
 };
 
-type SkillState = {
-  isExpanded: boolean;
+type SkillsState = {
+  acquainted: Skill[];
+  confident: Skill[];
+  selected?: Skill;
 };
 
-class SkillComponent extends React.Component<Skill, SkillState> {
-  constructor(props: Skill) {
+export default class Skills extends React.Component<SkillsProps, SkillsState> {
+  constructor(props: SkillsProps) {
     super(props);
-    this.state = { isExpanded: false };
-    this.toggleExpanded = this.toggleExpanded.bind(this);
+    
+    const classifiedSkills = {
+      acquainted: [],
+      confident: []
+    };
+
+    this.state = props.skills.reduce((classifiedSkills, skill) => {
+      if (skill.mastery === 'acquainted') classifiedSkills.acquainted.push(skill);
+      else classifiedSkills.confident.push(skill);
+      
+      return classifiedSkills
+    }, classifiedSkills);
   }
-  
-  render() {
-    const isExpanded = this.state.isExpanded;
-    const picture = this.props.picture;
-    const name = this.props.name;
-    const description = this.props.description;
+
+  public render() {
+    return (
+      <div>
+        <div className={styles.selector}>
+          <div>
+            <h4>I'm confident in</h4>
+            { this.buildSelector('confident') }
+          </div>
+    
+          <div>
+            <h4>I'm acquainted with</h4>
+            { this.buildSelector('acquainted') }
+          </div>
+        </div>
+        
+        { this.state.selected ? this.displaySelected() : '' }
+      </div>
+    )  
+  }
+
+  private buildSelector(mastery: Skill['mastery']): JSX.Element {
+    const skills = this.state[mastery];
 
     return (
-      <div 
-        onClick={ this.toggleExpanded }
-        className={`${styles.skill} ${isExpanded ? styles.expanded : ''}`}
-      >
-        <img src={ picture.src } alt={ picture.alt } />
-        
-        <div className={ isExpanded ? '' : styles.displayNone }>
-          <h3 className={ styles.center }>{ name }</h3>
-          <div>{ description }</div>
-        </div>
+      <div className={styles.selectorOptions}>{ 
+        skills.map((skill, index) => (
+          <div key={index} onClick={ e => this.selectSkill(skill, e) }>
+            <img src={ skill.picture.src } alt={ skill.picture.alt } />
+          </div>
+        )) 
+      }</div>
+    );
+  }
+
+  private displaySelected(): JSX.Element {
+    const skill = this.state.selected;
+    
+    return <div className={styles.selected}>
+      <div className={styles.verticalAlign}>
+        <img src={ skill.picture.src } alt={ skill.picture.alt } />
       </div>
-    )
+
+      <div className={styles.verticalAlign}>
+        <h3 className={ styles.center }>{ skill.name }</h3>
+        <div>{ skill.description }</div>
+      </div>
+    </div>
   }
 
-  toggleExpanded() {
-    this.setState(prevState => ({ isExpanded: !prevState.isExpanded }));
+  private selectSkill(skill: Skill, e: React.MouseEvent) {
+    this.setState(prevState => ({ selected: skill }));
   }
-}
-
-export default function Skills({ skills }: SkillsProps): JSX.Element {
-  return (<div className={ styles.container }>
-    { skills.map((skill, index) => <SkillComponent {...skill} key={index} />) }
-  </div>)
 }

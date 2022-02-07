@@ -24,5 +24,6 @@ const description = translate({
 export const javaScript: Skill = {
   picture: { src, alt },
   name,
-  description
+  description,
+  mastery: 'acquainted'
 }

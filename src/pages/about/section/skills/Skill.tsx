@@ -1,3 +1,5 @@
+type Mastery = 'confident' | 'acquainted';
+
 export type Skill = {
   picture: {
     src: string;
@@ -5,4 +7,5 @@ export type Skill = {
   };
   name: string;
   description: string;
+  mastery: Mastery;
 };

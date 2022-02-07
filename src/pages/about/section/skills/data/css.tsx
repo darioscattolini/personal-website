@@ -24,5 +24,6 @@ const description = translate({
 export const css: Skill = {
   picture: { src, alt },
   name,
-  description
+  description,
+  mastery: 'confident'
 }
