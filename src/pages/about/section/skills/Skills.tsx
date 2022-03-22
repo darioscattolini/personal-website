@@ -1,5 +1,6 @@
 import React from 'react';
 import { Skill } from './Skill';
+import Rating from '@site/src/components/Rating/Rating';
 import styles from './Skills.module.css';
 
 type SkillsProps = { 
@@ -7,41 +8,23 @@ type SkillsProps = {
 };
 
 type SkillsState = {
-  acquainted: Skill[];
-  confident: Skill[];
   selected?: Skill;
 };
 
 export default class Skills extends React.Component<SkillsProps, SkillsState> {
   constructor(props: SkillsProps) {
     super(props);
-    
-    const classifiedSkills = {
-      acquainted: [],
-      confident: []
-    };
 
-    this.state = props.skills.reduce((classifiedSkills, skill) => {
-      if (skill.mastery === 'acquainted') classifiedSkills.acquainted.push(skill);
-      else classifiedSkills.confident.push(skill);
-      
-      return classifiedSkills
-    }, classifiedSkills);
+    this.state = {
+      selected: undefined
+    };
   }
 
   public render() {
     return (
       <div>
         <div className={styles.selector}>
-          <div>
-            <h4>I'm confident in</h4>
-            { this.buildSelector('confident') }
-          </div>
-    
-          <div>
-            <h4>I'm acquainted with</h4>
-            { this.buildSelector('acquainted') }
-          </div>
+          { this.buildSelector() }
         </div>
         
         { this.state.selected ? this.displaySelected() : '' }
@@ -49,8 +32,8 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
     )  
   }
 
-  private buildSelector(mastery: Skill['mastery']): JSX.Element {
-    const skills = this.state[mastery];
+  private buildSelector(): JSX.Element {
+    const skills = this.props.skills.sort((a, b) => b.confidence - a.confidence);
 
     return (
       <div className={styles.selectorOptions}>{ 
@@ -73,7 +56,11 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
 
       <div className={styles.verticalAlign}>
         <h3 className={ styles.center }>{ skill.name }</h3>
-        <div>{ skill.description }</div>
+        <p>
+          <strong>Confidence: </strong>
+          <Rating value={ skill.confidence } total={ 5 } />
+        </p>
+        <p style={{ whiteSpace: 'pre-line' }}>{ skill.description }</p>
       </div>
     </div>
   }

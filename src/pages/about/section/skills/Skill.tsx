@@ -7,5 +7,5 @@ export type Skill = {
   };
   name: string;
   description: string;
-  mastery: Mastery;
+  confidence: 0 | 1 | 2 | 3 | 4 | 5;
 };

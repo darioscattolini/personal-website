@@ -16,7 +16,16 @@ const name = translate({
 });
 
 const description = translate({
-  message: 'lnoifwn oiwrnoin noigwnoin ngowinoi',
+  message: `\
+    I can leverage modern CSS capabilities for both pixel-perfect and flexible \
+    translations of UI designs. I'm proficient in structural/layout properties \
+    of CSS, and can build responsive layouts using Flexbox and CSS Grid. I \
+    know how to create effects with animations, transitions, filters and \
+    gradients. 
+    I can either write full raw CSS stylesheets, or use CSS preprocessors \
+    (SASS) or frameworks (Bootstrap). I'm also acquainted with CSS \
+    methodologies such as BEM and ITCSS.\
+  `,
   description: 'About page css skill description',
   id: 'about.skills.css.description'
 });
@@ -25,5 +34,5 @@ export const css: Skill = {
   picture: { src, alt },
   name,
   description,
-  mastery: 'confident'
+  confidence: 4
 }
