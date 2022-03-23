@@ -39,7 +39,11 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
       <div className={styles.selectorOptions}>{ 
         skills.map((skill, index) => (
           <div key={index} onClick={ e => this.selectSkill(skill, e) }>
-            <img src={ skill.picture.src } alt={ skill.picture.alt } />
+            <img 
+              src={ skill.picture.src } 
+              alt={ skill.picture.alt } 
+              title={ skill.name }
+            />
           </div>
         )) 
       }</div>
