@@ -1,4 +1,5 @@
 import React from 'react';
+import ThemedImage from '@theme/ThemedImage';
 import { Skill } from './Skill';
 import Rating from '@site/src/components/Rating/Rating';
 import styles from './Skills.module.css';
@@ -8,7 +9,7 @@ type SkillsProps = {
 };
 
 type SkillsState = {
-  selected?: Skill;
+  selected?: number;
 };
 
 export default class Skills extends React.Component<SkillsProps, SkillsState> {
@@ -27,7 +28,7 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
           { this.buildSelector() }
         </div>
         
-        { this.state.selected ? this.displaySelected() : '' }
+        { this.buildSkills() }
       </div>
     )  
   }
@@ -37,10 +38,13 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
 
     return (
       <div className={styles.selectorOptions}>{ 
-        skills.map((skill, index) => (
-          <div key={index} onClick={ e => this.selectSkill(skill, e) }>
-            <img 
-              src={ skill.picture.src } 
+        skills.map((skill, key) => (
+          <div key={key} onClick={ e => this.selectSkill(key, e) }>
+            <ThemedImage 
+              sources={{
+                light: skill.picture.srcLight,
+                dark: skill.picture.srcDark
+              }} 
               alt={ skill.picture.alt } 
               title={ skill.name }
             />
@@ -50,26 +54,71 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
     );
   }
 
-  private displaySelected(): JSX.Element {
-    const skill = this.state.selected;
+  private buildSkills(): JSX.Element {
+    return (
+      <div>
+        { this.props.skills.map((skill, key) => (
+          <div key={key}
+            className={
+              `${ 
+                styles.skill
+              } ${
+                this.state.selected === key ? styles.selected : '' 
+              }`
+            }
+          >
+            <div className={styles.verticalAlign}>
+              <ThemedImage 
+                sources={{
+                  light: skill.picture.srcLight,
+                  dark: skill.picture.srcDark
+                }} 
+                alt={ skill.picture.alt } 
+              />
+            </div>
     
-    return <div className={styles.selected}>
-      <div className={styles.verticalAlign}>
-        <img src={ skill.picture.src } alt={ skill.picture.alt } />
+            <div className={styles.verticalAlign}>
+              <h3 className={ styles.center }>{ skill.name }</h3>
+              <p>
+                <strong>Confidence: </strong>
+                <Rating value={ skill.confidence } total={ 5 } />
+              </p>
+              <p style={{ whiteSpace: 'pre-line' }}>{ skill.description }</p>
+            </div>
+          </div>
+        )) }
       </div>
-
-      <div className={styles.verticalAlign}>
-        <h3 className={ styles.center }>{ skill.name }</h3>
-        <p>
-          <strong>Confidence: </strong>
-          <Rating value={ skill.confidence } total={ 5 } />
-        </p>
-        <p style={{ whiteSpace: 'pre-line' }}>{ skill.description }</p>
-      </div>
-    </div>
+    )
   }
 
-  private selectSkill(skill: Skill, e: React.MouseEvent) {
+ /* private displaySelected(): JSX.Element {
+    const skill = this.state.selected;
+    
+    return (
+      <div className={styles.selected}>
+        <div className={styles.verticalAlign}>
+          <ThemedImage 
+            sources={{
+              light: skill.picture.srcLight,
+              dark: skill.picture.srcDark
+            }} 
+            alt={ skill.picture.alt } 
+          />
+        </div>
+
+        <div className={styles.verticalAlign}>
+          <h3 className={ styles.center }>{ skill.name }</h3>
+          <p>
+            <strong>Confidence: </strong>
+            <Rating value={ skill.confidence } total={ 5 } />
+          </p>
+          <p style={{ whiteSpace: 'pre-line' }}>{ skill.description }</p>
+        </div>
+      </div>
+    )
+  }*/
+
+  private selectSkill(skill: number, e: React.MouseEvent) {
     this.setState(prevState => ({ selected: skill }));
   }
 }

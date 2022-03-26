@@ -1,7 +1,8 @@
 import { translate } from "@docusaurus/Translate";
 import { Skill } from "../Skill";
 
-const src = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg';
+const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg';
+const srcDark = srcLight;
 
 const alt = translate({
   message: 'Sass Logo',
@@ -17,14 +18,17 @@ const name = translate({
 
 const description = translate({
   message: `\
-    Prefer scss syntax\
+    I'm familiar with Sass preprocessor, and especially with the SCSS syntax. \
+    I prefer to use it when projects start to scale, for example in Angular \
+    applications, leveraging features such as variables, modules, selector \
+    nesting and inheritance, etc.\ 
   `,
   description: 'About page sass skill description',
   id: 'about.skills.sass.description'
 });
 
 export const sass: Skill = {
-  picture: { src, alt },
+  picture: { srcLight, srcDark, alt },
   name,
   description,
   confidence: 3

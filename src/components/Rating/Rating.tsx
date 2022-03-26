@@ -12,9 +12,9 @@ export default function Rating(props: Props): JSX.Element {
   
   for (let i = 1; i <= props.total; i++) {
     if (props.value >= i) {
-      stars.push(<span>&#9733;</span>);
+      stars.push(<span key={i}>&#9733;</span>);
     } else {
-      stars.push(<span>&#9734;</span>);
+      stars.push(<span key={i}>&#9734;</span>);
     }
   }
   

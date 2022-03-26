@@ -28,22 +28,51 @@
 
 .selectorOptions > div:active {
   transform: scale(0.82) translateZ(0);
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
 }
 
-.selected {
+html[data-theme='dark'] .selectorOptions > div {
+  background-color: var(--ifm-color-dark-background);
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.7);
+}
+
+html[data-theme='dark'] .selectorOptions > div:hover {
+  filter: brightness(140%);
+}
+
+html[data-theme='dark'] .selectorOptions > div:active {
+  filter: brightness(60%);
+}
+
+.skill {
   width: 100%;
-  padding: 25px 50px;
+  padding: 0 50px;
   border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   display: grid;
   grid-template-columns: 170px 1fr;
   column-gap: 50px;
-
-  
-  transition: 0.4s;
+  height: 0px;
+  visibility: hidden;
+  transform: scale(0.7) translateZ(0);
+  transition: transform 0.6s, filter 0.5s ease-in;
+  filter: blur(4px);
 }
 
-.selected img {
+.skill.selected {
+  padding: 25px 50px;
+  height: auto;
+  visibility: visible;
+  transform: none;
+  filter: none;
+}
+
+html[data-theme='dark'] .skill {
+  background-color: var(--ifm-color-dark-background);
+  box-shadow: 0 8px 12px 0 rgba(0,0,0,0.6);
+}
+
+.skill img {
   margin: auto;
 }
 

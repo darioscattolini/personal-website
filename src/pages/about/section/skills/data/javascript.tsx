@@ -1,7 +1,8 @@
 import { translate } from "@docusaurus/Translate";
 import { Skill } from "../Skill";
 
-const src = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg';
+const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg';
+const srcDark = srcLight;
 
 const alt = translate({
   message: 'JavaScript Logo',
@@ -27,13 +28,15 @@ const description = translate({
     I'm up to date with cutting-edge ECMAScript syntax, and can use it along \
     with transpilers like Babel for browser compatibility. For complex apps I \
     usually prefer the TypeScript superset and frameworks like Angular/React.\
+    I'm familiar with JS libraries such as RxJS (for async event management) \
+    and Leaflet (for displaying interactive maps).
   `,
   description: 'About page js skill description',
   id: 'about.skills.js.description'
 });
 
 export const javaScript: Skill = {
-  picture: { src, alt },
+  picture: { srcLight, srcDark, alt },
   name,
   description,
   confidence: 4

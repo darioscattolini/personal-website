@@ -1,7 +1,8 @@
 import { translate } from "@docusaurus/Translate";
 import { Skill } from "../Skill";
 
-const src = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain-wordmark.svg';
+const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain-wordmark.svg';
+const srcDark = srcLight;
 
 const alt = translate({
   message: 'HTML Logo',
@@ -29,7 +30,7 @@ const description = translate({
 });
 
 export const html: Skill = {
-  picture: { src, alt },
+  picture: { srcLight, srcDark, alt },
   name,
   description,
   confidence: 5

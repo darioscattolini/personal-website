@@ -1,7 +1,8 @@
 import { translate } from "@docusaurus/Translate";
 import { Skill } from "../Skill";
 
-const src = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg';
+const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg';
+const srcDark = srcLight;
 
 const alt = translate({
   message: 'Git Logo',
@@ -30,7 +31,7 @@ const description = translate({
 });
 
 export const git: Skill = {
-  picture: { src, alt },
+  picture: { srcLight, srcDark, alt },
   name,
   description,
   confidence: 3

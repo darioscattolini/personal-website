@@ -2,7 +2,8 @@ type Mastery = 'confident' | 'acquainted';
 
 export type Skill = {
   picture: {
-    src: string;
+    srcLight: string;
+    srcDark: string;
     alt: string;
   };
   name: string;

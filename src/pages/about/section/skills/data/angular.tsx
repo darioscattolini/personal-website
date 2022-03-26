@@ -1,7 +1,8 @@
 import { translate } from "@docusaurus/Translate";
 import { Skill } from "../Skill";
 
-const src = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg';
+const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg';
+const srcDark = srcLight;
 
 const alt = translate({
   message: 'Angular Logo',
@@ -32,7 +33,7 @@ const description = translate({
 });
 
 export const angular: Skill = {
-  picture: { src, alt },
+  picture: { srcLight, srcDark, alt },
   name,
   description,
   confidence: 4
