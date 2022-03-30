@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 :root {
   --ifm-color-dark-background: #303846;
   --ifm-color-primary-lightest:	#56c6ac;
@@ -7,6 +9,7 @@
   --ifm-color-primary-dark:	#32947c;
   --ifm-color-primary-darker:	#2f8b75;
   --ifm-color-primary-darkest:	#277361;
+  --ifm-font-family-base: 'PT Sans', 'Open Sans', sans-serif;
   --ifm-code-font-size: 95%;
 }
 
