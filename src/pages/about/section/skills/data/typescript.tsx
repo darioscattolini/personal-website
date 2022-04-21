@@ -21,7 +21,7 @@ const description = translate({
     I started using TypeScript two years ago while learning Angular and \
     immediately fell in love with it. Whenever I need to develop something \
     more complex than mere website interactivity I prefer to rely on the \
-    advantages of type-safety for catching bugs, and in its object-oriented \
+    advantages of type-safety for preventing bugs, and in its object-oriented \
     patterns for structuring complex code.\
   `,
   description: 'About page typescript skill description',

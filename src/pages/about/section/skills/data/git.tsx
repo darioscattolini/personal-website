@@ -18,10 +18,10 @@ const name = translate({
 
 const description = translate({
   message: `\
-    I have working knowledge of Git, acquired through management of personal \
-    and bootcamp team repositories. I can commit changes sticking to commit \
-    message conventions, work on separate branches, solve merge conflicts, and \
-    document pull requests.
+    I have working knowledge of Git, acquired through the management of \
+    personal and bootcamp team repositories. I can commit changes sticking to \
+    commit message conventions, work on separate branches, solve merge \
+    conflicts, and document pull requests.
     I generally use Git alongside GitHub for hosting remote repositories. I \
     prefer to manage repositories through CLI commands, but I ocasionally use \
     my IDE (VSCode) source control features too.\

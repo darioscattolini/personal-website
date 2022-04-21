@@ -21,8 +21,8 @@ const description = translate({
     While working as a freelancer on PrestaShop online stores I had the chance \
     to work with the Symfony framework (version 3.4, as then required by \
     PrestaShop). 
-    While I have not developed full-scale apps with PHP and Symfony, I have \
-    learned some of the core features of the framework: writing controllers, \
+    While I haven't developed full-scale apps with PHP and Symfony, I've \
+    learnt some of the core features of the framework: writing controllers, \
     configuring routes, rendering pages with the Twig template engine, \
     building, processing and validating forms, injecting services with the \
     service container, and connecting to database with Doctrine ORM.\

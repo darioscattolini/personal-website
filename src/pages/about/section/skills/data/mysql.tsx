@@ -24,7 +24,7 @@ const description = translate({
     syntax to perform queries with filters and joins, and to perform \
     migrations between different versions of a database.
     Within the PHP ecosystem I can handle persistence in MySQL databases with \
-    Doctrine ORM.\
+    Doctrine ORM, and in Node.js apps I do the same with TypeORM.\
   `,
   description: 'About page mysql skill description',
   id: 'about.skills.mysql.description'

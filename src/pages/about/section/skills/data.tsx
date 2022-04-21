@@ -8,10 +8,13 @@ import { html } from "./data/html";
 import { javaScript } from "./data/javascript";
 import { jest } from "./data/jest";
 import { mySql } from './data/mysql';
+import { OOP } from './data/object-oriented-programming';
 import { php } from './data/php';
 import { prestaShop } from "./data/prestashop";
+import { react } from './data/react';
 import { sass } from "./data/sass";
 import { symfony } from './data/symfony';
+import { testing } from './data/testing';
 import { typeScript } from "./data/typescript";
 import { Skill } from "./Skill";
 
@@ -33,7 +36,10 @@ const skills: Skill[] = [
   php,
   symfony,
   mySql,
-  docusaurus
+  docusaurus,
+  react,
+  OOP,
+  testing
 ];
 
 export const skillsData: SkillsData = { header, skills };

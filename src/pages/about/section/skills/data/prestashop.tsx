@@ -19,7 +19,7 @@ const name = translate({
 const description = translate({
   message: `\
     I have one year of freelancing experience maintaining PrestaShop online \
-    stores. I have mostly worked with 1.7 versions, performing tasks such as \
+    stores. I've mostly worked with 1.7 versions, performing tasks such as \
     setting up new stores, migrating from version 1.6, customising themes and \
     developing modules with complex front- and back-office features. I'm \
     familiar with 1.7 codebase, including both PHP code and MySQL tables, and \

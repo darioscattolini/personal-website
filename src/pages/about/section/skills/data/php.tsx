@@ -18,12 +18,12 @@ const name = translate({
 
 const description = translate({
   message: `\
-    I have worked with PHP 7 doing some freelancing jobs on PrestaShop online \
+    I've worked with PHP 7 doing some freelancing jobs on PrestaShop online \
     stores. I have no experience developing the full extent of a server-side \
     app, but know the basics of object-oriented PHP and can navigate through \
     PHP code base in order to understand how it works and extend it.
-    Within the PHP ecosystem I have also worked with the Symfony framework, \
-    with template engines such as Twig and Smarty, and with Doctrine ORM.\
+    Within the PHP ecosystem I've also worked with the Symfony framework, with \
+    template engines such as Twig and Smarty, and with Doctrine ORM.\
   `,
   description: 'About page php skill description',
   id: 'about.skills.php.description'

@@ -19,9 +19,9 @@ const name = translate({
 const description = translate({
   message: `\
     I know how to set up and use the Jest testing framework for writing unit \
-    tests for JavaScript and TypeScript apps. I'm familiar with built-in \
-    features and can extend them with custom matchers written by myself or \
-    from external libraries.\
+    and e2e tests for JavaScript and TypeScript apps. I'm familiar with \
+    built-in features and can extend them with custom matchers written by \
+    myself or from external libraries.\
   `,
   description: 'About page jest skill description',
   id: 'about.skills.jest.description'
