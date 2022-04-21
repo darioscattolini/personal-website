@@ -1,3 +1,7 @@
+// INDEX PAGE
+import * as indexData from "./pages/index-data";
+
+// ABOUT PAGE
 import { skillsData } from "./pages/about/skills/data";
 
-export { skillsData }
+export { indexData, skillsData }
