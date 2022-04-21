@@ -2,8 +2,8 @@ import React from 'react';
 import ThemedImage from '@theme/ThemedImage';
 import { Skill } from './Skill';
 import Rating from '@site/src/components/Rating/Rating';
+import SplitParagraphs from '@site/src/components/SplitParagraphs/SplitParagraphs';
 import styles from './Skills.module.css';
-import SplitParagraphs from '../../../../components/SplitParagraphs/SplitParagraphs';
 
 type SkillsProps = { 
   skills: Skill[];
@@ -91,33 +91,6 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
       </div>
     )
   }
-
- /* private displaySelected(): JSX.Element {
-    const skill = this.state.selected;
-    
-    return (
-      <div className={styles.selected}>
-        <div className={styles.verticalAlign}>
-          <ThemedImage 
-            sources={{
-              light: skill.picture.srcLight,
-              dark: skill.picture.srcDark
-            }} 
-            alt={ skill.picture.alt } 
-          />
-        </div>
-
-        <div className={styles.verticalAlign}>
-          <h3 className={ styles.center }>{ skill.name }</h3>
-          <p>
-            <strong>Confidence: </strong>
-            <Rating value={ skill.confidence } total={ 5 } />
-          </p>
-          <p style={{ whiteSpace: 'pre-line' }}>{ skill.description }</p>
-        </div>
-      </div>
-    )
-  }*/
 
   private selectSkill(skill: number, e: React.MouseEvent) {
     this.setState(prevState => ({ selected: skill }));

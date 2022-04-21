@@ -1,5 +1,3 @@
-type Mastery = 'confident' | 'acquainted';
-
 export type Skill = {
   picture: {
     srcLight: string;
