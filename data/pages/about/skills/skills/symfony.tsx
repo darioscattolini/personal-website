@@ -1,5 +1,5 @@
 import { translate } from "@docusaurus/Translate";
-import { Skill } from "../Skill";
+import { Skill } from "../../../../models";
 
 const srcLight = 'img/skills/symfony-light.svg';
 const srcDark = 'img/skills/symfony-dark.svg';

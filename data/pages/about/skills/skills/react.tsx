@@ -1,5 +1,5 @@
 import { translate } from "@docusaurus/Translate";
-import { Skill } from "../Skill";
+import { Skill } from "../../../../../src/pages/about/section/skills/Skill";
 
 const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg';
 const srcDark = srcLight;

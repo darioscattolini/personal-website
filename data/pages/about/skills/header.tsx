@@ -1,5 +1,5 @@
 import { translate } from "@docusaurus/Translate";
-import { SectionHeader } from "../../SectionHeader";
+import { SectionHeader } from "../../../models";
 
 const name = translate({
   message: 'Skills / Tech Stack',

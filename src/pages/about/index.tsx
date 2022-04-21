@@ -5,7 +5,7 @@ import Header from './Header';
 import Section from './section/Section';
 import { ExperienceHeader } from './section/experience/ExperienceHeader';
 import { PortfolioHeader } from './section/portfolio/PortfolioHeader';
-import { skillsData } from './section/skills/data';
+import { skillsData } from '../../../data/data';
 import Skills from './section/skills/Skills';
 
 const metaTitle = translate({
