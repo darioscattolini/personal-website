@@ -4,8 +4,8 @@ import Header from './Header';
 import Section from './section/Section';
 import { ExperienceHeader } from './section/experience/ExperienceHeader';
 import { PortfolioHeader } from './section/portfolio/PortfolioHeader';
-import { aboutData, skillsData } from '../../../data/data';
 import Skills from './section/skills/Skills';
+import { aboutData, skillsData } from '@site/data/data';
 
 export default function About(): JSX.Element {
   return (

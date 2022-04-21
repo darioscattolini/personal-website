@@ -1,5 +1,5 @@
 import React from 'react';
-import SplitParagraphs from '../../components/SplitParagraphs/SplitParagraphs';
+import SplitParagraphs from '@site/src/components/SplitParagraphs/SplitParagraphs';
 
 type AboutHeaderProps = {
   title: string;

@@ -5,7 +5,7 @@ import Layout from '@theme/Layout';
 import HomepageFeatures from '../components/HomepageFeatures/HomepageFeatures';
 import Typewriter from 'typewriter-effect';
 import styles from './index.module.css';
-import { indexData } from '../../data/data';
+import { indexData } from '@site/data/data';
 
 // const { siteConfig } = useDocusaurusContext();
 // site title hard-coded here until config file allows translation
