@@ -1,4 +1,5 @@
 import React from 'react';
+import SplitParagraphs from '../../components/SplitParagraphs/SplitParagraphs';
 
 type AboutHeaderProps = {
   title: string;
@@ -18,7 +19,7 @@ export default function Header(
             <div>
               <h1 className="hero__title">{ title }</h1>
               <p className="hero__subtitle margin-bottom--lg">{ subtitle }</p>
-              <p>{ content }</p>
+              <SplitParagraphs paragraphs={ content } />
             </div>
           </div>
 

@@ -3,6 +3,7 @@ import ThemedImage from '@theme/ThemedImage';
 import { Skill } from './Skill';
 import Rating from '@site/src/components/Rating/Rating';
 import styles from './Skills.module.css';
+import SplitParagraphs from '../../../../components/SplitParagraphs/SplitParagraphs';
 
 type SkillsProps = { 
   skills: Skill[];
@@ -83,7 +84,7 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
                 <strong>Confidence: </strong>
                 <Rating value={ skill.confidence } total={ 5 } />
               </p>
-              <p style={{ whiteSpace: 'pre-line' }}>{ skill.description }</p>
+              <SplitParagraphs paragraphs={ skill.description } />
             </div>
           </div>
         )) }
