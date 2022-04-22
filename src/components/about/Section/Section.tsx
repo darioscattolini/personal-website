@@ -1,8 +1,8 @@
 import React, { ReactChild, ReactChildren } from 'react';
 import styles from './Section.module.css';
-import { SectionHeader } from './SectionHeader';
+import { SectionHeaderData } from './section-header-data';
 
-type Props = SectionHeader & { 
+type Props = SectionHeaderData & { 
   children: ReactChild | ReactChildren;
   dark?: boolean;
 };

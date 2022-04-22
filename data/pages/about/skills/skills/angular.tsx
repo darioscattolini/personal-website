@@ -1,5 +1,5 @@
 import { translate } from "@docusaurus/Translate";
-import { Skill } from "../../../../models";
+import { SkillData } from "../../../../models";
 
 const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg';
 const srcDark = srcLight;
@@ -32,7 +32,7 @@ const description = translate({
   id: 'about.skills.angular.description'
 });
 
-export const angular: Skill = {
+export const angular: SkillData = {
   picture: { srcLight, srcDark, alt },
   name,
   description,

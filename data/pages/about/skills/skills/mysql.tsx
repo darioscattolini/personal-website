@@ -1,5 +1,5 @@
 import { translate } from "@docusaurus/Translate";
-import { Skill } from "../../../../models";
+import { SkillData } from "../../../../models";
 
 const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original-wordmark.svg';
 const srcDark = srcLight;
@@ -30,7 +30,7 @@ const description = translate({
   id: 'about.skills.mysql.description'
 });
 
-export const mySql: Skill = {
+export const mySql: SkillData = {
   picture: { srcLight, srcDark, alt },
   name,
   description,

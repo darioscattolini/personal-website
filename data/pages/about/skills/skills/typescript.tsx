@@ -1,5 +1,5 @@
 import { translate } from "@docusaurus/Translate";
-import { Skill } from "../../../../models";
+import { SkillData } from "../../../../models";
 
 const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg';
 const srcDark = srcLight;
@@ -28,7 +28,7 @@ const description = translate({
   id: 'about.skills.typescript.description'
 });
 
-export const typeScript: Skill = {
+export const typeScript: SkillData = {
   picture: { srcLight, srcDark, alt },
   name,
   description,

@@ -1,15 +1,15 @@
 import React from 'react';
 import SplitParagraphs from '@site/src/components/shared/SplitParagraphs/SplitParagraphs';
 
-type AboutHeaderProps = {
+type Props = {
   title: string;
   subtitle: string;
   content: string;
-  imgPath: string;
+  imgSrc: string;
 };
 
 export default function Header(
-  { title, subtitle, content, imgPath }: AboutHeaderProps
+  { title, subtitle, content, imgSrc }: Props
 ): JSX.Element {
   return (
     <header className="hero hero--dark">
@@ -24,7 +24,7 @@ export default function Header(
           </div>
 
           <div className="col col--4" /*styles.heroBannerImage*/>
-            <img src={ imgPath } />
+            <img src={ imgSrc } />
           </div>
         </div>
       </div>

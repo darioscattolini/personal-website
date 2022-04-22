@@ -1,4 +1,4 @@
-export type Skill = {
+export type SkillData = {
   picture: {
     srcLight: string;
     srcDark: string;

@@ -1,8 +1,8 @@
 // HOME PAGE
-import { FeatureData } from '@site/src/components/home/Feature/FeatureData';
+import { FeatureData } from '@site/src/components/home/Feature/feature-data';
 
 // ABOUT PAGE
-import { SectionHeader } from "@site/src/pages/about/section/SectionHeader";
-import { Skill } from "@site/src/pages/about/section/skills/Skill";
+import { SectionHeaderData } from "@site/src/components/about/Section/section-header-data";
+import { SkillData } from "@site/src/components/about/Skills/skill-data";
 
-export { FeatureData, SectionHeader, Skill };
+export { FeatureData, SectionHeaderData, SkillData };

@@ -1,5 +1,5 @@
 import { translate } from "@docusaurus/Translate";
-import { Skill } from "../../../../models";
+import { SkillData } from "../../../../models";
 
 const srcLight = 'img/skills/prestashop.svg';
 const srcDark = srcLight;
@@ -29,7 +29,7 @@ const description = translate({
   id: 'about.skills.prestashop.description'
 });
 
-export const prestaShop: Skill = {
+export const prestaShop: SkillData = {
   picture: { srcLight, srcDark, alt },
   name,
   description,

@@ -1,5 +1,5 @@
 import { translate } from "@docusaurus/Translate";
-import { Skill } from "../../../../models";
+import { SkillData } from "../../../../models";
 
 const srcLight = 'img/skills/object-oriented-programming.svg';
 const srcDark = srcLight;
@@ -29,7 +29,7 @@ const description = translate({
   id: 'about.skills.OOP.description'
 });
 
-export const OOP: Skill = {
+export const OOP: SkillData = {
   picture: { srcLight, srcDark, alt },
   name,
   description,

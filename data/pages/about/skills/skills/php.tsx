@@ -1,5 +1,5 @@
 import { translate } from "@docusaurus/Translate";
-import { Skill } from "../../../../models";
+import { SkillData } from "../../../../models";
 
 const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-plain.svg';
 const srcDark = srcLight;
@@ -29,7 +29,7 @@ const description = translate({
   id: 'about.skills.php.description'
 });
 
-export const php: Skill = {
+export const php: SkillData = {
   picture: { srcLight, srcDark, alt },
   name,
   description,

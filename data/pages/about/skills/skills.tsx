@@ -1,5 +1,5 @@
-import { SectionHeader } from "../../../models";
-import { Skill } from "../../../models";
+import { SectionHeaderData } from "../../../models";
+import { SkillData } from "../../../models";
 import { angular } from "./skills/angular";
 import { css } from "./skills/css";
 import { docusaurus } from './skills/docusaurus';
@@ -19,11 +19,11 @@ import { testing } from './skills/testing';
 import { typeScript } from "./skills/typescript";
 
 type SkillsData = {
-  header: SectionHeader;
-  skills: Skill[]
+  header: SectionHeaderData;
+  skills: SkillData[]
 };
 
-const skills: Skill[] = [
+const skills: SkillData[] = [
   html, 
   css, 
   javaScript, 
@@ -42,4 +42,4 @@ const skills: Skill[] = [
   testing
 ];
 
-export const skillsData: SkillsData = { header, skills };
+export const skillsSectionData: SkillsData = { header, skills };

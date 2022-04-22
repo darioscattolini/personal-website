@@ -1,5 +1,5 @@
 import { translate } from "@docusaurus/Translate";
-import { Skill } from "../../../../../src/pages/about/section/skills/Skill";
+import { SkillData } from "../../../../models";
 
 const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg';
 const srcDark = srcLight;
@@ -26,7 +26,7 @@ const description = translate({
   id: 'about.skills.react.description'
 });
 
-export const react: Skill = {
+export const react: SkillData = {
   picture: { srcLight, srcDark, alt },
   name,
   description,

@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
-import { FeatureData } from './FeatureData';
+import { FeatureData } from './feature-data';
 
 export default function Feature(
   {title, imgSrc, link, description}: FeatureData

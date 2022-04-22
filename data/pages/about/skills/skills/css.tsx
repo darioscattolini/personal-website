@@ -1,5 +1,5 @@
 import { translate } from "@docusaurus/Translate";
-import { Skill } from "../../../../models";
+import { SkillData } from "../../../../models";
 
 const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain-wordmark.svg';
 const srcDark = srcLight;
@@ -31,7 +31,7 @@ const description = translate({
   id: 'about.skills.css.description'
 });
 
-export const css: Skill = {
+export const css: SkillData = {
   picture: { srcLight, srcDark, alt },
   name,
   description,

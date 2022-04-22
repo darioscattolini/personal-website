@@ -1,5 +1,5 @@
 import { translate } from "@docusaurus/Translate";
-import { Skill } from "../../../../models";
+import { SkillData } from "../../../../models";
 
 const srcLight = 'img/skills/symfony-light.svg';
 const srcDark = 'img/skills/symfony-dark.svg';
@@ -31,7 +31,7 @@ const description = translate({
   id: 'about.skills.symfony.description'
 });
 
-export const symfony: Skill = {
+export const symfony: SkillData = {
   picture: { srcLight, srcDark, alt },
   name,
   description,

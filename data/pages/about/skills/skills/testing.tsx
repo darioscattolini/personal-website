@@ -1,5 +1,5 @@
 import { translate } from "@docusaurus/Translate";
-import { Skill } from "../../../../models";
+import { SkillData } from "../../../../models";
 
 const srcLight = 'img/skills/testing.svg';
 const srcDark = srcLight;
@@ -28,7 +28,7 @@ const description = translate({
   id: 'about.skills.testing.description'
 });
 
-export const testing: Skill = {
+export const testing: SkillData = {
   picture: { srcLight, srcDark, alt },
   name,
   description,

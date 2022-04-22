@@ -1,12 +1,12 @@
 import React from 'react';
 import ThemedImage from '@theme/ThemedImage';
-import { Skill } from './Skill';
+import { SkillData } from './skill-data';
 import Rating from '@site/src/components/shared/Rating/Rating';
 import SplitParagraphs from '@site/src/components/shared/SplitParagraphs/SplitParagraphs';
 import styles from './Skills.module.css';
 
 type SkillsProps = { 
-  skills: Skill[];
+  skills: SkillData[];
 };
 
 type SkillsState = {

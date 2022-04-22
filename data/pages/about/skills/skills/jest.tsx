@@ -1,5 +1,5 @@
 import { translate } from "@docusaurus/Translate";
-import { Skill } from "../../../../models";
+import { SkillData } from "../../../../models";
 
 const srcLight = 'img/skills/jest.svg';
 const srcDark = srcLight;
@@ -27,7 +27,7 @@ const description = translate({
   id: 'about.skills.jest.description'
 });
 
-export const jest: Skill = {
+export const jest: SkillData = {
   picture: { srcLight, srcDark, alt },
   name,
   description,

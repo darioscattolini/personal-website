@@ -1,4 +1,7 @@
 import { translate } from '@docusaurus/Translate';
+import { experienceSectionData } from './experience/experience';
+import { portfolioSectionData } from './portfolio/portfolio';
+import { skillsSectionData } from './skills/skills';
 
 const metaTitle = translate({
   message: 'Darío Scattolini | Front-end developer based in Barcelona | About me',
@@ -42,7 +45,7 @@ const headerContent = translate({
   id: 'about.header.p1'
 });
 
-const headerImgPath = 'img/programmer.png';
+const headerImgSrc = 'img/programmer.png';
 
 export { 
   metaTitle, 
@@ -50,5 +53,8 @@ export {
   headerTitle,
   headerSubtitle,
   headerContent,
-  headerImgPath
+  headerImgSrc,
+  skillsSectionData,
+  portfolioSectionData,
+  experienceSectionData
 }

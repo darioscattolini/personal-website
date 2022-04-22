@@ -1,5 +1,5 @@
 import { translate } from '@docusaurus/Translate';
-import { SectionHeader } from '../SectionHeader';
+import { SectionHeaderData } from '../../../models';
 
 const name = translate({
   message: 'Portfolio',
@@ -19,4 +19,4 @@ const description = translate({
   id: 'about.portfolio.description'
 });
 
-export const PortfolioHeader: SectionHeader = { name, title, description };
+export const header: SectionHeaderData = { name, title, description };
