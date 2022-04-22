@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from '@docusaurus/Translate';
-import { FeatureItem } from '../FeatureItem';
+import { FeatureData } from '../../../models';
 
 const title = translate({
   id: 'HomepageFeatures.blog.featureTitle',
@@ -8,7 +8,7 @@ const title = translate({
   description: 'Blog feature title',
 });
 
-const image = translate({
+const imgSrc = translate({
   id: 'HomepageFeatures.blog.featureImage',
   message: '/img/blog.png',
   description: 'Blog feature image path',
@@ -20,14 +20,14 @@ const link = '/blog';
 
 const descriptionContent = translate({
   id: 'HomepageFeatures.blog.featureDescription',
-  message: `
-    In my blog posts I share information on broader issues: I review content
-    or tools I find useful, share projects I like and discuss topics not 
-    related to programming.
+  message: `\
+    In my blog posts I share information on broader issues: I review content \
+    or tools I find useful, share projects I like and discuss topics not \
+    related to programming.\
   `,
   description: 'Blog feature description',
 });
 
 const description: JSX.Element = <>{ descriptionContent }</>;
 
-export const blog: FeatureItem = { title, image, link, description };
+export const blog: FeatureData = { title, imgSrc, link, description };

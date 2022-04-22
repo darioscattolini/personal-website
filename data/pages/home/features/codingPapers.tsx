@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from '@docusaurus/Translate';
-import { FeatureItem } from '../FeatureItem';
+import { FeatureData } from '../../../models';
 
 const title = translate({
   id: 'HomepageFeatures.codingPapers.featureTitle',
@@ -8,7 +8,7 @@ const title = translate({
   description: 'Coding papers feature title',
 });
 
-const image = translate({
+const imgSrc = translate({
   id: 'HomepageFeatures.codingPapers.featureImage',
   message: '/img/papers.png',
   description: 'Coding papers feature image path',
@@ -20,14 +20,14 @@ const link = '/docs/intro';
 
 const descriptionContent = translate({
   id: 'HomepageFeatures.codingPapers.featureDescription',
-  message: `
-    My coding papers contain short technical writings. Whenever I find out 
-    something worth sharing I include it here: coding tips, techniques to
-    solve particular problems, bits of theory, etc.
+  message: `\
+    My coding papers contain short technical writings. Whenever I find out \
+    something worth sharing I include it here: coding tips, techniques to \
+    solve particular problems, bits of theory, etc.\
   `,
   description: 'Coding papers feature description',
 });
 
 const description: JSX.Element = <>{ descriptionContent }</>;
 
-export const codingPapers: FeatureItem = { title, image, link, description };
+export const codingPapers: FeatureData = { title, imgSrc, link, description };

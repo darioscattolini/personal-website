@@ -1,4 +1,8 @@
 import { translate } from '@docusaurus/Translate';
+import { FeatureData } from '../../models';
+import { about } from './features/about';
+import { blog } from './features/blog';
+import { codingPapers } from './features/codingPapers';
 
 const metaTitle = translate({
   message: 'Darío Scattolini | Front-end developer based in Barcelona',
@@ -15,7 +19,11 @@ const metaDescription = translate({
   id: 'index.meta.description'
 });
 
-const heroSubtitle = translate({
+const headerTitle = 'Darío Scattolini';
+
+const headerImgSrc = 'img/programmer.png';
+
+const headerSubtitle = translate({
   message: 'Front-end developer with full-stack inclinations',
   description: 'Header/hero subtitle in Home Page',
   id: 'index.header.subtitle'
@@ -40,13 +48,15 @@ const aboutContent = translate({
   id: 'index.about.content'
 });
 
-const bannerImgSrc = 'img/programmer.png';
+const aboutFeatures: FeatureData[] = [codingPapers, blog, about];
 
 export {
   metaTitle,
   metaDescription,
-  heroSubtitle,
+  headerTitle,
+  headerSubtitle,
+  headerImgSrc,
   aboutTitle,
   aboutContent,
-  bannerImgSrc
+  aboutFeatures
 }

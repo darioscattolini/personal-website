@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from '@docusaurus/Translate';
-import { FeatureItem } from '../FeatureItem';
+import { FeatureData } from '../../../models';
 
 const title = translate({
   id: 'HomepageFeatures.about.featureTitle',
@@ -8,7 +8,7 @@ const title = translate({
   description: 'About feature title',
 });
 
-const image = translate({
+const imgSrc = translate({
   id: 'HomepageFeatures.about.featureImage',
   message: '/img/about.png',
   description: 'About feature image path',
@@ -20,14 +20,14 @@ const link = '/about';
 
 const descriptionContent = translate({
   id: 'HomepageFeatures.about.featureDescription',
-  message: `
-    You can also find more information about me, such as a short bio, a 
-    description of my skills and experience, and a portfolio with a 
-    selection of my most relevant projects.
+  message: `\
+    You can also find more information about me, such as a short bio, a \
+    description of my skills and experience, and a portfolio with a \
+    selection of my most relevant projects.\
   `,
   description: 'About feature description',
 });
 
 const description: JSX.Element = <>{ descriptionContent }</>;
 
-export const about: FeatureItem = { title, image, link, description };
+export const about: FeatureData = { title, imgSrc, link, description };

@@ -1,6 +1,6 @@
-export type FeatureItem = {
+export type FeatureData = {
   title: string;
-  image: string;
+  imgSrc: string;
   link?: string;
   description: JSX.Element;
 };
