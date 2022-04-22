@@ -1,8 +1,8 @@
 import React from 'react';
 import ThemedImage from '@theme/ThemedImage';
 import { Skill } from './Skill';
-import Rating from '@site/src/components/Rating/Rating';
-import SplitParagraphs from '@site/src/components/SplitParagraphs/SplitParagraphs';
+import Rating from '@site/src/components/shared/Rating/Rating';
+import SplitParagraphs from '@site/src/components/shared/SplitParagraphs/SplitParagraphs';
 import styles from './Skills.module.css';
 
 type SkillsProps = { 

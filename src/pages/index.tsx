@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 // import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import HomepageFeatures from '../components/HomepageFeatures/HomepageFeatures';
+import HomepageFeatures from '@site/src/components/home/HomepageFeatures/HomepageFeatures';
 import Typewriter from 'typewriter-effect';
 import styles from './index.module.css';
 import { indexData } from '@site/data/data';
