@@ -1,4 +1,3 @@
-import React from 'react';
 import { translate } from '@docusaurus/Translate';
 import { FeatureData } from '../../../models';
 
@@ -18,7 +17,7 @@ const imgSrc = translate({
 
 const link = '/blog';
 
-const descriptionContent = translate({
+const description = translate({
   id: 'HomepageFeatures.blog.featureDescription',
   message: `\
     In my blog posts I share information on broader issues: I review content \
@@ -27,7 +26,5 @@ const descriptionContent = translate({
   `,
   description: 'Blog feature description',
 });
-
-const description: JSX.Element = <>{ descriptionContent }</>;
 
 export const blog: FeatureData = { title, imgSrc, link, description };

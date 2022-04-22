@@ -1,4 +1,3 @@
-import React from 'react';
 import { translate } from '@docusaurus/Translate';
 import { FeatureData } from '../../../models';
 
@@ -18,7 +17,7 @@ const imgSrc = translate({
 
 const link = '/docs/intro';
 
-const descriptionContent = translate({
+const description = translate({
   id: 'HomepageFeatures.codingPapers.featureDescription',
   message: `\
     My coding papers contain short technical writings. Whenever I find out \
@@ -27,7 +26,5 @@ const descriptionContent = translate({
   `,
   description: 'Coding papers feature description',
 });
-
-const description: JSX.Element = <>{ descriptionContent }</>;
 
 export const codingPapers: FeatureData = { title, imgSrc, link, description };
