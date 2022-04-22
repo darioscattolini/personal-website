@@ -25,10 +25,7 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
   public render() {
     return (
       <div>
-        <div className={styles.selector}>
-          { this.buildSelector() }
-        </div>
-        
+        { this.buildSelector() }
         { this.buildSkills() }
       </div>
     )  
@@ -38,7 +35,7 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
     const skills = this.props.skills.sort((a, b) => b.confidence - a.confidence);
 
     return (
-      <div className={styles.selectorOptions}>{ 
+      <div className={styles.selector}>{ 
         skills.map((skill, key) => (
           <div key={key} onClick={ e => this.selectSkill(key, e) }>
             <ThemedImage 
