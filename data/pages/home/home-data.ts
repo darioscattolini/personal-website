@@ -1,4 +1,5 @@
 import { translate } from '@docusaurus/Translate';
+import calcYearsLapse from '../../../src/utilities/calcYearsLapse';
 import { FeatureData } from '../../models';
 import { about } from './features/about';
 import { blog } from './features/blog';
@@ -41,11 +42,13 @@ const aboutContent = translate({
     front-end side of the JavaScript technology stack. I started coding in \
     2019, and soon became quite skilled in JavaScript and Angular. Working \
     as a freelancer I also had the chance to get involved with PrestaShop, \
-    PHP and Symfony. I'm 32 years old, from Argentina, and I currently live \
+    PHP and Symfony. I'm {age} years old, from Argentina, and I currently live \
     in Barcelona.\
   `,
   description: 'About content in Home Page',
   id: 'index.about.content'
+}, {
+  age: calcYearsLapse({start: '1989-01-21'})
 });
 
 const aboutFeatures: FeatureData[] = [codingPapers, blog, about];

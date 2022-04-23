@@ -8,7 +8,7 @@ const name = translate({
 });
 
 const title = translate({
-  message: 'I know something about this',
+  message: 'Some stuff I know',
   description: 'About page skills/tech section title',
   id: 'about.skills.title'
 });

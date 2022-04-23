@@ -1,4 +1,5 @@
 import { translate } from "@docusaurus/Translate";
+import calcYearsLapse from '../../../../../src/utilities/calcYearsLapse';
 import { SkillData } from "../../../../models";
 
 const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg';
@@ -18,8 +19,8 @@ const name = translate({
 
 const description = translate({
   message: `\
-    I've been using the latest versions of Angular during the last two years, \
-    acquiring a competent domain of its central features.
+    I've been using the latest versions of Angular during the last \
+    {angularYears} years, acquiring a competent domain of its central features.
     I can develop smart and presentational components, and know the details of \
     their lifecycle and interaction. I also know how use dependency injection \
     to provide services at different levels of an Angular app. I'm familiar \
@@ -30,6 +31,8 @@ const description = translate({
   `,
   description: 'About page angular skill description',
   id: 'about.skills.angular.description'
+}, {
+  angularYears: calcYearsLapse({start: '2020-02-01'}, true)
 });
 
 export const angular: SkillData = {

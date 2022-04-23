@@ -1,4 +1,5 @@
 import { translate } from "@docusaurus/Translate";
+import calcYearsLapse from '../../../../../src/utilities/calcYearsLapse';
 import { SkillData } from "../../../../models";
 
 const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg';
@@ -18,8 +19,8 @@ const name = translate({
 
 const description = translate({
   message: `\
-    During the last three years I have acquired extensive knowledge of core \
-    JavaScript (including features and topics such as asynchronous \
+    During the last {jsYears} years I have acquired extensive knowledge of \
+    core JavaScript (including features and topics such as asynchronous \
     programming, modules, prototypal inheritance, class syntax, JS engines, \
     event loop...) and browser APIs (such as the DOM, Fetch and Canvas). I've \
     also done some server-side programming with Node.js and Nest.
@@ -33,6 +34,8 @@ const description = translate({
   `,
   description: 'About page js skill description',
   id: 'about.skills.js.description'
+}, {
+  jsYears: calcYearsLapse({start: '2019-07-01'}, true)
 });
 
 export const javaScript: SkillData = {

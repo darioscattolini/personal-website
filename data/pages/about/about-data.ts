@@ -1,4 +1,5 @@
 import { translate } from '@docusaurus/Translate';
+import calcYearsLapse from '../../../src/utilities/calcYearsLapse';
 import { experienceSectionData } from './experience/experience';
 import { portfolioSectionData } from './portfolio/portfolio';
 import { skillsSectionData } from './skills/skills';
@@ -29,9 +30,9 @@ const headerSubtitle = translate({
 
 const headerContent = translate({
   message: `\
-    I was born in Argentina 33 years ago, and I'm living in Barcelona since \
-    2019. I have a degree in Philosophy, but I've spent the last 3 years \
-    training to become a software developer.
+    I was born in Argentina {age} years ago, and I'm living in Barcelona \
+    since 2019. I have a degree in Philosophy, but I've spent the last \
+    {training} years training to become a software developer.
     During my training I've focused on front-end skills and technologies, \
     developing web pages and applications using JavaScript, TypeScript and \
     Angular. As a freelancer I've also worked with PrestaShop and back-end \
@@ -43,6 +44,9 @@ const headerContent = translate({
   `,
   description: 'About page header content',
   id: 'about.header.p1'
+}, {
+  age: calcYearsLapse({start: '1989-01-21'}),
+  training: calcYearsLapse({start: '2019-01-01'}, true)
 });
 
 const headerImgSrc = 'img/programmer.png';
