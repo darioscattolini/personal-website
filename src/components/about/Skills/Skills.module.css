@@ -72,6 +72,10 @@ html[data-theme='dark'] .skill {
   margin: auto;
 }
 
+.skill p {
+  margin-bottom: 0.5em;
+}
+
 .verticalAlign {
   display: flex;
   flex-direction: column;
