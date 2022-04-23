@@ -22,7 +22,7 @@ const description = translate({
     classes using Jest. While I've never written full integration tests for \
     front-end apps, I've crawled websites using Puppeteer and know how to use \
     this tool for UI automation testing. I've also used Jest alongside \
-    Supertest to write e2e tests of Node.js/Nest.js APIs.\
+    Supertest to write e2e tests of Node.js/Nest APIs.\
   `,
   description: 'About page testing skill description',
   id: 'about.skills.testing.description'

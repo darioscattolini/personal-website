@@ -17,6 +17,9 @@ import { sass } from "./skills/sass";
 import { symfony } from './skills/symfony';
 import { testing } from './skills/testing';
 import { typeScript } from "./skills/typescript";
+import { restApis } from './skills/rest-apis';
+import { nodeJs } from './skills/node-js';
+import { nest } from './skills/nest';
 
 type SkillsData = {
   header: SectionHeaderData;
@@ -39,7 +42,10 @@ const skills: SkillData[] = [
   docusaurus,
   react,
   OOP,
-  testing
+  testing,
+  restApis,
+  nodeJs,
+  nest
 ];
 
 export const skillsSectionData: SkillsData = { header, skills };
