@@ -1,4 +1,3 @@
-import { SectionHeaderData } from "../../../models";
 import { SkillData } from "../../../models";
 import { angular } from "./skills/angular";
 import { css } from "./skills/css";
@@ -20,11 +19,6 @@ import { typeScript } from "./skills/typescript";
 import { restApis } from './skills/rest-apis';
 import { nodeJs } from './skills/node-js';
 import { nest } from './skills/nest';
-
-type SkillsData = {
-  header: SectionHeaderData;
-  skills: SkillData[]
-};
 
 const skills: SkillData[] = [
   html, 
@@ -48,4 +42,4 @@ const skills: SkillData[] = [
   nest
 ];
 
-export const skillsSectionData: SkillsData = { header, skills };
+export const skillsSectionData = { header, skills };
