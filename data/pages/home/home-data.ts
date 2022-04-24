@@ -1,5 +1,5 @@
 import { translate } from '@docusaurus/Translate';
-import calcYearsLapse from '../../../src/utilities/calcYearsLapse';
+import calcYearsLapse from '@site/src/utilities/calcYearsLapse';
 import { FeatureData } from '../../models';
 import { about } from './features/about';
 import { blog } from './features/blog';

@@ -1,4 +1,5 @@
 import { translate } from '@docusaurus/Translate';
+import { MarkdownContent } from '@site/src/utilities/markdown-content';
 import { FeatureData } from '../../../models';
 
 const title = translate({
@@ -17,14 +18,11 @@ const imgSrc = translate({
 
 const link = '/about';
 
-const description = translate({
+const descriptionMd = translate({
   id: 'HomepageFeatures.about.featureDescription',
-  message: `\
-    You can also find more information about me, such as a short bio, a \
-    description of my skills and experience, and a portfolio with a \
-    selection of my most relevant projects.\
-  `,
+  message: `You can also find **more information about me**, such as a short bio, a description of my skills and experience, and a portfolio with a selection of my most relevant projects.`,
   description: 'About feature description',
 });
+const description = new MarkdownContent(descriptionMd);
 
 export const about: FeatureData = { title, imgSrc, link, description };

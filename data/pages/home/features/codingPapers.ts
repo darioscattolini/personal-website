@@ -1,4 +1,5 @@
 import { translate } from '@docusaurus/Translate';
+import { MarkdownContent } from '@site/src/utilities/markdown-content';
 import { FeatureData } from '../../../models';
 
 const title = translate({
@@ -17,14 +18,11 @@ const imgSrc = translate({
 
 const link = '/docs/intro';
 
-const description = translate({
+const descriptionMd = translate({
   id: 'HomepageFeatures.codingPapers.featureDescription',
-  message: `\
-    My coding papers contain short technical writings. Whenever I find out \
-    something worth sharing I include it here: coding tips, techniques to \
-    solve particular problems, bits of theory, etc.\
-  `,
+  message: `My coding papers contain **short technical writings**. Whenever I find out something worth sharing I include it here: coding tips, techniques to solve particular problems, bits of theory, etc.`,
   description: 'Coding papers feature description',
 });
+const description = new MarkdownContent(descriptionMd);
 
 export const codingPapers: FeatureData = { title, imgSrc, link, description };

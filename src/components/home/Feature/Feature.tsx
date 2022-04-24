@@ -19,7 +19,7 @@ export default function Feature(
           <h3>{ title }</h3>
         </Link>
 
-        <p>{ description }</p>
+        <p>{ description.getJSXParsed() }</p>
       </div>
     </div>
   );

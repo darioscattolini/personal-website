@@ -1,5 +1,6 @@
 import { translate } from "@docusaurus/Translate";
 import { MarkdownContent } from '@site/src/utilities/markdown-content';
+import { links } from '../../../../misc/linksDictionary';
 import { SkillData } from "../../../../models";
 
 const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-plain-wordmark.svg';
@@ -18,9 +19,14 @@ const name = translate({
 });
 
 const descriptionMd = translate({
-  message: `Coming from an Angular background, I found Nest the most appropriate option as Node.js framework for server-side apps, since its architecture and dependency injection system are inspired by Angular. I have used Nest alongside TypeORM in the development of simple web APIs.`,
+  message: `As I come from an [Angular]({angular}) background, [Nest]({nest}) was an easy choice as [Node.js]({nodejs}) framework for server-side apps, since its architecture and dependency injection system are inspired by Angular. I have used Nest alongside [TypeORM]({typeorm}) in the development of simple web APIs.`,
   description: 'About page Nest skill description',
   id: 'about.skills.nest.description'
+}, {
+  angular: links.angular,
+  nest: links.nest,
+  nodejs: links.nodejs,
+  typeorm: links.typeorm
 });
 const description = new MarkdownContent(descriptionMd);
 

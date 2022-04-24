@@ -1,5 +1,6 @@
 import { translate } from "@docusaurus/Translate";
 import { MarkdownContent } from '@site/src/utilities/markdown-content';
+import { links } from '../../../../misc/linksDictionary';
 import { SkillData } from "../../../../models";
 
 const srcLight = 'img/skills/jest.svg';
@@ -18,9 +19,12 @@ const name = translate({
 });
 
 const descriptionMd = translate({
-  message: `I know how to set up and use the Jest testing framework for writing unit and e2e tests for JavaScript and TypeScript apps. I'm familiar with built-in features and can extend them with custom matchers written by myself or from external libraries.`,
+  message: `I know how to set up and use the [Jest]({jest}) testing framework for writing unit and e2e tests for JavaScript and [TypeScript]({typescript}) apps. I'm familiar with built-in features and can extend them with custom matchers written by myself or from external libraries.`,
   description: 'About page jest skill description',
   id: 'about.skills.jest.description'
+}, {
+  jest: links.jest,
+  typescript: links.typescript
 });
 const description = new MarkdownContent(descriptionMd);
 
