@@ -1,0 +1,35 @@
+.div3d {
+  border-radius: 6px;
+  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
+}
+
+html[data-theme='dark'] .div3d {
+  background-color: var(--ifm-color-dark-background);
+  box-shadow: 0 10px 18px 0 rgba(0,0,0,0.7);
+}
+
+.interactive {
+  transition: 0.4s;
+}
+
+.interactive:hover {
+  cursor: pointer;
+  transform: scale(1.08) translateZ(0);
+  box-shadow: 0 10px 18px 0 rgba(0,0,0,0.2);
+  background-color: #e2e2e2;
+  filter: brightness(110%);
+}
+
+.interactive:active {
+  transform: scale(0.82) translateZ(0);
+  box-shadow: 0 3px 5px 0 rgba(0,0,0,0.2);
+  filter: brightness(85%);
+}
+
+html[data-theme='dark'] .interactive:hover {
+  filter: brightness(140%);
+}
+
+html[data-theme='dark'] .interactive:active {
+  filter: brightness(60%);
+}

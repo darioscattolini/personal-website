@@ -1,6 +1,7 @@
 import React from 'react';
 import ThemedImage from '@theme/ThemedImage';
-import Rating from '@site/src/components/shared/Rating/Rating';
+import Rating from '../../shared/Rating/Rating';
+import Div3D from '../../shared/Div3D/Div3D';
 import { SkillData } from './skill-data';
 import styles from './Skills.module.css';
 
@@ -31,12 +32,23 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
   }
 
   private buildSelector(): JSX.Element {
+    /**
+     * This is not accessible. Options should be focusable and focus should
+     * trigger selection.
+     */
+
     const skills = this.props.skills.sort((a, b) => b.confidence - a.confidence);
 
     return (
       <div className={styles.selector}>{ 
         skills.map((skill, key) => (
-          <div key={key} onClick={ e => this.selectSkill(key, e) }>
+          <Div3D key={key} 
+            className={ styles.option }
+            interactive
+            eventHandlers={{
+              onClick: (e: React.MouseEvent) => { this.selectSkill(key, e) }
+            }}
+          >
             <ThemedImage 
               sources={{
                 light: skill.picture.srcLight,
@@ -45,7 +57,7 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
               alt={ skill.picture.alt } 
               title={ skill.name }
             />
-          </div>
+          </Div3D>
         )) 
       }</div>
     );
@@ -55,7 +67,7 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
     return (
       <div>
         { this.props.skills.map((skill, key) => (
-          <div key={key}
+          <Div3D key={key}
             className={
               `${ 
                 styles.skill
@@ -82,7 +94,7 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
               </p>
               { skill.description.getJSXParsed() }
             </div>
-          </div>
+          </Div3D>
         )) }
       </div>
     )
