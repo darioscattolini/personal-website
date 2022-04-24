@@ -1,4 +1,8 @@
-import { micromark } from 'micromark';
+import unified from 'unified';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import rehypeExternalLinks from 'rehype-external-links';
+import rehypeStringify from 'rehype-stringify';
 import parse from 'html-react-parser';
 import { JSXParsed } from './jsx-parsed';
 
@@ -7,7 +11,7 @@ export class MarkdownContent {
   private jsx: JSXParsed;
 
   constructor(content: string) {
-    this.html = micromark(content);
+    this.html = this.parseMD(content)
     this.jsx = parse(this.html);
   }
 
@@ -17,5 +21,20 @@ export class MarkdownContent {
 
   public getJSXParsed(): JSXParsed {
     return this.jsx;
+  }
+
+  private parseMD(content: string): string {
+    const html = unified()
+      .use(remarkParse)
+      // @ts-expect-error
+      .use(remarkRehype)
+      // @ts-expect-error
+      .use(rehypeExternalLinks, {rel: ['nofollow']})
+      // @ts-expect-error
+      .use(rehypeStringify)
+      .processSync(content)
+      .toString();
+
+    return html;
   }
 }
