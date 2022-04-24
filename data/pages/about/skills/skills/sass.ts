@@ -1,4 +1,5 @@
 import { translate } from "@docusaurus/Translate";
+import { MarkdownContent } from '@site/src/utilities/markdown-content';
 import { SkillData } from "../../../../models";
 
 const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg';
@@ -16,16 +17,12 @@ const name = translate({
   id: 'about.skills.sass.name'
 });
 
-const description = translate({
-  message: `\
-    I'm familiar with Sass preprocessor, and especially with the SCSS syntax. \
-    I prefer to use it when projects start to scale, for example in Angular \
-    applications, leveraging features such as variables, modules, selector \
-    nesting and inheritance, etc.\ 
-  `,
+const descriptionMd = translate({
+  message: `I'm familiar with Sass preprocessor, and especially with the SCSS syntax. I prefer to use it when projects start to scale, for example in Angular applications, leveraging features such as variables, modules, selector nesting and inheritance, etc.`,
   description: 'About page sass skill description',
   id: 'about.skills.sass.description'
 });
+const description = new MarkdownContent(descriptionMd);
 
 export const sass: SkillData = {
   picture: { srcLight, srcDark, alt },

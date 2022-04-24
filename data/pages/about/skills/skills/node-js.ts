@@ -1,4 +1,5 @@
 import { translate } from "@docusaurus/Translate";
+import { MarkdownContent } from '@site/src/utilities/markdown-content';
 import { SkillData } from "../../../../models";
 
 const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg';
@@ -16,15 +17,12 @@ const name = translate({
   id: 'about.skills.nodejs.name'
 });
 
-const description = translate({
-  message: `\
-    I have working knowledge of Node.js that has allowed me to write a few \
-    simple scripts and server-side apps. I have depeloped web crawlers using \
-    Puppeteer and APIs using the Nest framework.\
-  `,
+const descriptionMd = translate({
+  message: `I have working knowledge of Node.js that has allowed me to write a few simple scripts and server-side apps. I have depeloped web crawlers using Puppeteer and APIs using the Nest framework.`,
   description: 'About page Node.js skill description',
   id: 'about.skills.nodejs.description'
 });
+const description = new MarkdownContent(descriptionMd);
 
 export const nodeJs: SkillData = {
   picture: { srcLight, srcDark, alt },

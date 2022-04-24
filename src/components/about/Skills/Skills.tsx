@@ -1,8 +1,7 @@
 import React from 'react';
 import ThemedImage from '@theme/ThemedImage';
-import { SkillData } from './skill-data';
 import Rating from '@site/src/components/shared/Rating/Rating';
-import SplitParagraphs from '@site/src/components/shared/SplitParagraphs/SplitParagraphs';
+import { SkillData } from './skill-data';
 import styles from './Skills.module.css';
 
 type SkillsProps = { 
@@ -81,7 +80,7 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
                 <strong>Confidence: </strong>
                 <Rating value={ skill.confidence } total={ 5 } />
               </p>
-              <SplitParagraphs paragraphs={ skill.description } />
+              { skill.description.getJSXParsed() }
             </div>
           </div>
         )) }

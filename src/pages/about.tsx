@@ -14,9 +14,8 @@ export default function About(): JSX.Element {
       <Header 
         title={ data.headerTitle }
         subtitle={ data.headerSubtitle }
-        content={ data.headerContent }
         imgSrc={ data.headerImgSrc }
-      />
+      >{ data.headerContent.getJSXParsed() }</Header>
 
       <main>
         <Section { ...data.skillsSectionData.header }>

@@ -1,4 +1,5 @@
 import { translate } from "@docusaurus/Translate";
+import { MarkdownContent } from '@site/src/utilities/markdown-content';
 import { SkillData } from "../../../../models";
 
 const srcLight = 'img/skills/docusaurus.svg';
@@ -16,16 +17,12 @@ const name = translate({
   id: 'about.skills.docusaurus.name'
 });
 
-const description = translate({
-  message: `\
-    Docusaurus is a React-powered static-site generator, specially designed to \
-    build documentation websites. I've built this personal website using \
-    Docusarus, and during its development I've learned the basics of component \
-    development in React and the syntax of Markdown/MDX.\
-  `,
+const descriptionMd = translate({
+  message: `Docusaurus is a React-powered static-site generator, specially designed to build documentation websites. I've built this personal website using Docusarus, and during its development I've learned the basics of component development in React and the syntax of Markdown/MDX.`,
   description: 'About page docusaurus skill description',
   id: 'about.skills.docusaurus.description'
 });
+const description = new MarkdownContent(descriptionMd);
 
 export const docusaurus: SkillData = {
   picture: { srcLight, srcDark, alt },

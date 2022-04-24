@@ -1,4 +1,5 @@
 import { translate } from "@docusaurus/Translate";
+import { MarkdownContent } from '@site/src/utilities/markdown-content';
 import { SkillData } from "../../../../models";
 
 const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg';
@@ -16,19 +17,12 @@ const name = translate({
   id: 'about.skills.git.name'
 });
 
-const description = translate({
-  message: `\
-    I have working knowledge of Git, acquired through the management of \
-    personal and bootcamp team repositories. I can commit changes sticking to \
-    commit message conventions, work on separate branches, solve merge \
-    conflicts, and document pull requests.
-    I generally use Git alongside GitHub for hosting remote repositories. I \
-    prefer to manage repositories through CLI commands, but I ocasionally use \
-    my IDE (VSCode) source control features too.\
-  `,
+const descriptionMd = translate({
+  message: `I have working knowledge of Git, acquired through the management of personal and bootcamp team repositories. I can commit changes sticking to commit message conventions, work on separate branches, solve merge conflicts, and document pull requests.\n\n I generally use Git alongside GitHub for hosting remote repositories. I prefer to manage repositories through CLI commands, but I ocasionally use my IDE (VSCode) source control features too.`,
   description: 'About page git skill description',
   id: 'about.skills.git.description'
 });
+const description = new MarkdownContent(descriptionMd);
 
 export const git: SkillData = {
   picture: { srcLight, srcDark, alt },

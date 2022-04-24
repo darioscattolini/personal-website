@@ -1,4 +1,5 @@
 import { translate } from "@docusaurus/Translate";
+import { MarkdownContent } from '@site/src/utilities/markdown-content';
 import { SkillData } from "../../../../models";
 
 const srcLight = 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg';
@@ -16,15 +17,12 @@ const name = translate({
   id: 'about.skills.react.name'
 });
 
-const description = translate({
-  message: `\
-    While developing Docusaurus websites I've learnt how to extend React apps \
-    with custom components. However, I've never built a fully-fledged React \
-    app.\
-  `,
+const descriptionMd = translate({
+  message: `While developing Docusaurus websites I've learnt how to extend React apps with custom components. However, I've never built a fully-fledged React app.`,
   description: 'About page react skill description',
   id: 'about.skills.react.description'
 });
+const description = new MarkdownContent(descriptionMd);
 
 export const react: SkillData = {
   picture: { srcLight, srcDark, alt },
