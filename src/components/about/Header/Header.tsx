@@ -23,7 +23,7 @@ export default function Header(
             </div>
           </div>
 
-          <div className="col col--4" /*styles.heroBannerImage*/>
+          <div className="col col--4">
             <img src={ imgSrc } />
           </div>
         </div>
