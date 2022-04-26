@@ -11,9 +11,9 @@
 }
 
 .sectionName {
-  font-size: 1.1em;
+  font-size: 1.2em;
   text-transform: uppercase;
-  color: var(--ifm-color-primary-dark);
+  color: var(--ifm-color-primary-lightest);
 }
 
 .title {
@@ -23,8 +23,4 @@
 .dark {
   background-color: var(--ifm-color-dark-background);
   color: var(--ifm-color-white);
-}
-
-.dark .sectionName {
-  color: var(--ifm-color-primary-lightest);
 }
