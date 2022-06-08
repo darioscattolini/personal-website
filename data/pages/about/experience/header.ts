@@ -1,7 +1,6 @@
 import { translate } from '@docusaurus/Translate';
 import { SectionHeaderData } from '../../../models';
 
-
 const name = translate({
   message: 'Experience',
   description: 'About page experience section name',
@@ -15,7 +14,7 @@ const title = translate({
 });
 
 const description = translate({
-  message: '',
+  message: `This is a summary of my education and work experience.`,
   description: 'About page experience section description',
   id: 'about.experience.description'
 });

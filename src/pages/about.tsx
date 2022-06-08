@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import Header from '@site/src/components/about/Header/Header';
 import Section from '@site/src/components/about/Section/Section';
 import Skills from '@site/src/components/about/Skills/Skills';
+import Experience from '../components/about/Experience/Experience';
 import { aboutData as data } from '@site/data/data';
 
 export default function About(): JSX.Element {
@@ -27,7 +28,7 @@ export default function About(): JSX.Element {
         </Section>
 
         <Section { ...data.experienceSectionData.header }>
-          <div></div>
+          <Experience landmarks={ data.experienceSectionData.landmarks }/>
         </Section>
       </main>
     </Layout>

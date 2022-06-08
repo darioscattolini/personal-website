@@ -13,6 +13,7 @@
   --ifm-color-primary-darkest:	#277361;
   --ifm-font-family-base: 'Asap', 'Open Sans', sans-serif;
   --ifm-code-font-size: 95%;
+  --color-secondary: #ff6663;
 }
 
 html[data-theme='light'] {
