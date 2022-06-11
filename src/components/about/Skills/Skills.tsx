@@ -17,8 +17,10 @@ export default class Skills extends React.Component<SkillsProps, SkillsState> {
   constructor(props: SkillsProps) {
     super(props);
 
+    const selected = props.skills.findIndex(skill => skill.selectedDefault);
+
     this.state = {
-      selected: undefined
+      selected: selected !== -1 ? selected : undefined
     };
   }
 

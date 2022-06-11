@@ -9,4 +9,5 @@ export type SkillData = {
   name: string;
   description: MarkdownContent;
   confidence: 0 | 1 | 2 | 3 | 4 | 5;
+  selectedDefault?: boolean;
 };

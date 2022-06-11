@@ -37,5 +37,6 @@ export const angular: SkillData = {
   picture: { srcLight, srcDark, alt },
   name,
   description,
-  confidence: 4
+  confidence: 4,
+  selectedDefault: true
 }

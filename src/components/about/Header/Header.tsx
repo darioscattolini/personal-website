@@ -1,5 +1,7 @@
 import React from 'react';
 import { JSXParsed } from '@site/src/utilities/jsx-parsed';
+import styles from './Header.module.css';
+import GlitchImage from '../../shared/GlitchImage/GlitchImage';
 
 type Props = {
   title: string;
@@ -23,8 +25,8 @@ export default function Header(
             </div>
           </div>
 
-          <div className="col col--4">
-            <img src={ imgSrc } />
+          <div className={`col col--4`}>
+            <GlitchImage url={ imgSrc }></GlitchImage>
           </div>
         </div>
       </div>

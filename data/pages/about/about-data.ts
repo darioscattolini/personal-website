@@ -39,7 +39,7 @@ const headerContentMd = translate({
 });
 const headerContent = new MarkdownContent(headerContentMd);
 
-const headerImgSrc = 'img/programmer.png';
+const headerImgSrc = 'img/dario-scattolini.png';
 
 export { 
   metaTitle, 
